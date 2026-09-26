@@ -1,0 +1,18 @@
+model: m3
+architecture: unet
+encoder_name: resnet18
+encoder_weights: imagenet
+encoder_depth: 5
+decoder_channels: [256, 128, 64, 32, 16]
+input_channels: 3
+output_channels: 1
+stage_1:
+  epochs: 5
+  frozen: encoder
+  trainable: [decoder, segmentation_head]
+  learning_rate: 0.001
+stage_2:
+  epochs: 25
+  trainable: [encoder.layer4, decoder, segmentation_head]
+  encoder_learning_rate: 0.00001
+  decoder_learning_rate: 0.0001

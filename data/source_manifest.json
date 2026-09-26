@@ -1,0 +1,1624 @@
+{
+  "dataset": "BraTS2015",
+  "selection_version": "archive-webseed-v2",
+  "source_page": "https://academictorrents.com/details/c4f39a0a8e46e8d2174b8a8a81b9887150f44d50",
+  "torrent_url": "https://academictorrents.com/download/c4f39a0a8e46e8d2174b8a8a81b9887150f44d50.torrent",
+  "infohash_sha1": "c4f39a0a8e46e8d2174b8a8a81b9887150f44d50",
+  "torrent_sha256": "551afce859f470fe8858557139bdb1889c68062532be04cc5f30781c1a8cb236",
+  "webseed": "https://archive.org/download/BRATS2015/",
+  "archive_metadata_url": "https://archive.org/metadata/BRATS2015",
+  "archive_inventory_sha256": "64e5a7d0f13b4d4871f3a43ef91fad119abff962a282ff77e719e2ab4f45cdb4",
+  "available_complete_cases": {
+    "HGG": 100,
+    "LGG": 54
+  },
+  "raw_root": "data/raw/BRATS2015",
+  "selection": "From Archive.org files matching the verified torrent, with source SHA-1: 80 HGG + 20 LGG; SHA-256 order per grade; FLAIR and OT only",
+  "license_file": {
+    "path": "License_CC_BY_NC_SA_3.0.txt",
+    "bytes": 196,
+    "sha1": "e3f3a90098f4d1575eaedf3e16e9add7f1b4ff2d"
+  },
+  "cases": [
+    {
+      "case_id": "HGG/brats_2013_pat0001_1",
+      "grade": "HGG",
+      "patient_id": "brats_2013_pat0001_1",
+      "flair": {
+        "path": "training/HGG/brats_2013_pat0001_1/VSD.Brain.XX.O.MR_Flair.54512.mha",
+        "bytes": 2150526,
+        "sha1": "58903af7db57b049e32b29ec72415f4288877a07"
+      },
+      "mask": {
+        "path": "training/HGG/brats_2013_pat0001_1/VSD.Brain_3more.XX.O.OT.54517.mha",
+        "bytes": 40031,
+        "sha1": "9d894f0a59aa53448c1f50f79595830ad3fcee32"
+      },
+      "split": "val"
+    },
+    {
+      "case_id": "HGG/brats_2013_pat0002_1",
+      "grade": "HGG",
+      "patient_id": "brats_2013_pat0002_1",
+      "flair": {
+        "path": "training/HGG/brats_2013_pat0002_1/VSD.Brain.XX.O.MR_Flair.54518.mha",
+        "bytes": 2282293,
+        "sha1": "ffd781eff78642558923b2403532800f9a5d010d"
+      },
+      "mask": {
+        "path": "training/HGG/brats_2013_pat0002_1/VSD.Brain_3more.XX.O.OT.54523.mha",
+        "bytes": 29884,
+        "sha1": "c4ed587cead2e115f6e5b98feb80a6de99972c34"
+      },
+      "split": "val"
+    },
+    {
+      "case_id": "HGG/brats_2013_pat0003_1",
+      "grade": "HGG",
+      "patient_id": "brats_2013_pat0003_1",
+      "flair": {
+        "path": "training/HGG/brats_2013_pat0003_1/VSD.Brain.XX.O.MR_Flair.54524.mha",
+        "bytes": 2362445,
+        "sha1": "f018d1c40f941e8e3ff5eb268398a2dd02cc3df7"
+      },
+      "mask": {
+        "path": "training/HGG/brats_2013_pat0003_1/VSD.Brain_3more.XX.XX.OT.54529.mha",
+        "bytes": 44004,
+        "sha1": "b4319edb1f1b6fbe1357512abe993df5b96343c3"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_2013_pat0005_1",
+      "grade": "HGG",
+      "patient_id": "brats_2013_pat0005_1",
+      "flair": {
+        "path": "training/HGG/brats_2013_pat0005_1/VSD.Brain.XX.O.MR_Flair.54536.mha",
+        "bytes": 2159583,
+        "sha1": "a5c553c1ba48e5f2b4a0815326eedd37a19239e0"
+      },
+      "mask": {
+        "path": "training/HGG/brats_2013_pat0005_1/VSD.Brain_3more.XX.O.OT.54541.mha",
+        "bytes": 40607,
+        "sha1": "972106114cb332a875c34cb6eb0ad89093358a74"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_2013_pat0006_1",
+      "grade": "HGG",
+      "patient_id": "brats_2013_pat0006_1",
+      "flair": {
+        "path": "training/HGG/brats_2013_pat0006_1/VSD.Brain.XX.O.MR_Flair.54542.mha",
+        "bytes": 1547847,
+        "sha1": "403ff38c0fc957ad5fa5076901589d4230a8bf6e"
+      },
+      "mask": {
+        "path": "training/HGG/brats_2013_pat0006_1/VSD.Brain_3more.XX.O.OT.54547.mha",
+        "bytes": 58968,
+        "sha1": "f49e23ee571cd4ee2ad144f4c78969d07fb6ee8b"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_2013_pat0007_1",
+      "grade": "HGG",
+      "patient_id": "brats_2013_pat0007_1",
+      "flair": {
+        "path": "training/HGG/brats_2013_pat0007_1/VSD.Brain.XX.O.MR_Flair.54548.mha",
+        "bytes": 2261056,
+        "sha1": "1731fa0f3c1bf3ff3261b28d5201f71b2f8a5db1"
+      },
+      "mask": {
+        "path": "training/HGG/brats_2013_pat0007_1/VSD.Brain_3more.XX.O.OT.54553.mha",
+        "bytes": 33804,
+        "sha1": "71da2c5396e3249a579c3c003f027477082f353c"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_2013_pat0008_1",
+      "grade": "HGG",
+      "patient_id": "brats_2013_pat0008_1",
+      "flair": {
+        "path": "training/HGG/brats_2013_pat0008_1/VSD.Brain.XX.O.MR_Flair.54554.mha",
+        "bytes": 2355618,
+        "sha1": "dfde3dbf9e5cd3fd4b6a855e371430c2034e9356"
+      },
+      "mask": {
+        "path": "training/HGG/brats_2013_pat0008_1/VSD.Brain_3more.XX.XX.OT.54559.mha",
+        "bytes": 50395,
+        "sha1": "1c11da680fcfe09e4cc9852fb95a9faddbf63e97"
+      },
+      "split": "val"
+    },
+    {
+      "case_id": "HGG/brats_2013_pat0009_1",
+      "grade": "HGG",
+      "patient_id": "brats_2013_pat0009_1",
+      "flair": {
+        "path": "training/HGG/brats_2013_pat0009_1/VSD.Brain.XX.O.MR_Flair.54560.mha",
+        "bytes": 1720973,
+        "sha1": "bfe6407ea1e118e8fde743c87dbf512153ae2150"
+      },
+      "mask": {
+        "path": "training/HGG/brats_2013_pat0009_1/VSD.Brain_3more.XX.XX.OT.54565.mha",
+        "bytes": 49689,
+        "sha1": "5d68b7af426150fbab6807159fae0ea24ce1ab17"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_2013_pat0010_1",
+      "grade": "HGG",
+      "patient_id": "brats_2013_pat0010_1",
+      "flair": {
+        "path": "training/HGG/brats_2013_pat0010_1/VSD.Brain.XX.O.MR_Flair.54566.mha",
+        "bytes": 2242795,
+        "sha1": "f1a9f42a57de2479ade3c59f211d0aae90aa05d9"
+      },
+      "mask": {
+        "path": "training/HGG/brats_2013_pat0010_1/VSD.Brain_3more.XX.O.OT.54571.mha",
+        "bytes": 22829,
+        "sha1": "80f91920954f2cf9abe901532afcd485eb9b1fca"
+      },
+      "split": "test"
+    },
+    {
+      "case_id": "HGG/brats_2013_pat0012_1",
+      "grade": "HGG",
+      "patient_id": "brats_2013_pat0012_1",
+      "flair": {
+        "path": "training/HGG/brats_2013_pat0012_1/VSD.Brain.XX.O.MR_Flair.54578.mha",
+        "bytes": 2057429,
+        "sha1": "846fadc6ca5dcd6c39c90f5dbd75aa1a3efbb9c4"
+      },
+      "mask": {
+        "path": "training/HGG/brats_2013_pat0012_1/VSD.Brain_3more.XX.O.OT.54583.mha",
+        "bytes": 23396,
+        "sha1": "ace2f5290f26e4126df584ab0ec003d20b5e8ce3"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_2013_pat0013_1",
+      "grade": "HGG",
+      "patient_id": "brats_2013_pat0013_1",
+      "flair": {
+        "path": "training/HGG/brats_2013_pat0013_1/VSD.Brain.XX.O.MR_Flair.54584.mha",
+        "bytes": 2077590,
+        "sha1": "d48d612e0568a7c354e877b412b2d89a23feb064"
+      },
+      "mask": {
+        "path": "training/HGG/brats_2013_pat0013_1/VSD.Brain_3more.XX.O.OT.54589.mha",
+        "bytes": 21292,
+        "sha1": "c39aedeb3684d69355faf6c8ca4f6d8bf767c0ac"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_2013_pat0014_1",
+      "grade": "HGG",
+      "patient_id": "brats_2013_pat0014_1",
+      "flair": {
+        "path": "training/HGG/brats_2013_pat0014_1/VSD.Brain.XX.O.MR_Flair.54590.mha",
+        "bytes": 2325293,
+        "sha1": "6bd8be7c9f796053d5f9e8bcda9b5a925d968ae7"
+      },
+      "mask": {
+        "path": "training/HGG/brats_2013_pat0014_1/VSD.Brain_3more.XX.O.OT.54595.mha",
+        "bytes": 48312,
+        "sha1": "feec336826adab0c3e9ae9d5ff051ae10feaae46"
+      },
+      "split": "test"
+    },
+    {
+      "case_id": "HGG/brats_2013_pat0015_1",
+      "grade": "HGG",
+      "patient_id": "brats_2013_pat0015_1",
+      "flair": {
+        "path": "training/HGG/brats_2013_pat0015_1/VSD.Brain.XX.O.MR_Flair.54596.mha",
+        "bytes": 2509835,
+        "sha1": "86bbf210242398db4a7d0863c00f93d3614704d4"
+      },
+      "mask": {
+        "path": "training/HGG/brats_2013_pat0015_1/VSD.Brain_3more.XX.O.OT.54601.mha",
+        "bytes": 50864,
+        "sha1": "5992a5d5553e34f266854ceda169ba4ab06793fa"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_2013_pat0022_1",
+      "grade": "HGG",
+      "patient_id": "brats_2013_pat0022_1",
+      "flair": {
+        "path": "training/HGG/brats_2013_pat0022_1/VSD.Brain.XX.O.MR_Flair.54602.mha",
+        "bytes": 1958751,
+        "sha1": "6d4fb4c5347a46af42a40a7837d026f02fb047b7"
+      },
+      "mask": {
+        "path": "training/HGG/brats_2013_pat0022_1/VSD.Brain_3more.XX.O.OT.54607.mha",
+        "bytes": 33294,
+        "sha1": "3d1bc00d96e10a9c019139438e71524ef6c311c8"
+      },
+      "split": "val"
+    },
+    {
+      "case_id": "HGG/brats_2013_pat0026_1",
+      "grade": "HGG",
+      "patient_id": "brats_2013_pat0026_1",
+      "flair": {
+        "path": "training/HGG/brats_2013_pat0026_1/VSD.Brain.XX.O.MR_Flair.54620.mha",
+        "bytes": 1876250,
+        "sha1": "bf085084459cbc617defed70b1513d9fd2da46fb"
+      },
+      "mask": {
+        "path": "training/HGG/brats_2013_pat0026_1/VSD.Brain_3more.XX.O.OT.54625.mha",
+        "bytes": 46967,
+        "sha1": "592b24f85254fe718a6965d933aee2e4c65248d4"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat105_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat105_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat105_0001/VSD.Brain.XX.O.MR_Flair.35533.mha",
+        "bytes": 2005453,
+        "sha1": "8c3b06b3cd7e23f1cafe78b4c3a75ba446029870"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat105_0001/VSD.Brain_3more.XX.O.OT.42283.mha",
+        "bytes": 8928170,
+        "sha1": "560fe4f37410c758ecda6504f3ce306e127d488e"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat111_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat111_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat111_0001/VSD.Brain.XX.O.MR_Flair.40827.mha",
+        "bytes": 1884627,
+        "sha1": "d6bff5451e2ea190b650110c1c0203aa295c8349"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat111_0001/VSD.Brain_3more.XX.O.OT.42287.mha",
+        "bytes": 8928170,
+        "sha1": "0fc375e924f7e377c35d9f9fdf879bf6b8307727"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat117_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat117_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat117_0001/VSD.Brain.XX.O.MR_Flair.35541.mha",
+        "bytes": 2076412,
+        "sha1": "3585d145ac82c3cc677348b2c0afe20b817e0e93"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat117_0001/VSD.Brain_3more.XX.O.OT.42291.mha",
+        "bytes": 8928170,
+        "sha1": "1405f2ad209fb5d244a3e33dd6a20af9c419bf8b"
+      },
+      "split": "test"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat118_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat118_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat118_0001/VSD.Brain.XX.O.MR_Flair.35545.mha",
+        "bytes": 1773781,
+        "sha1": "bb8384392e9b73c32f08671ea088d946b257ce97"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat118_0001/VSD.Brain_3more.XX.O.OT.42293.mha",
+        "bytes": 8928170,
+        "sha1": "6d5123ea90a87ac86fbc7d4047657e7ad27f35dd"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat121_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat121_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat121_0001/VSD.Brain.XX.O.MR_Flair.35553.mha",
+        "bytes": 1530505,
+        "sha1": "7082848ba88064f1230f1e878d568ea91fde6670"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat121_0001/VSD.Brain_3more.XX.O.OT.42297.mha",
+        "bytes": 8928170,
+        "sha1": "feffd7905e39174661cf6c5187f7918c89be24a9"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat124_0003",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat124_0003",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat124_0003/VSD.Brain.XX.O.MR_Flair.35557.mha",
+        "bytes": 1834055,
+        "sha1": "99067de4b2e25d1978f864603c855e611001cc02"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat124_0003/VSD.Brain_3more.XX.O.OT.42299.mha",
+        "bytes": 8928170,
+        "sha1": "bd6cb00c93dda5e07e6d33cebadc007d1c63b7a7"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat131_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat131_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat131_0001/VSD.Brain.XX.O.MR_Flair.35561.mha",
+        "bytes": 2256755,
+        "sha1": "2ef31028bb362473378ad44effe758adef1f11c8"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat131_0001/VSD.Brain_3more.XX.O.OT.42303.mha",
+        "bytes": 8928170,
+        "sha1": "8b88b3ae8b90710a881c1b889826a40f6b1d0ce9"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat133_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat133_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat133_0001/VSD.Brain.XX.O.MR_Flair.35565.mha",
+        "bytes": 1733662,
+        "sha1": "8ccc3a43f958f02ca6bcb3ea68859de18cdbaf43"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat133_0001/VSD.Brain_3more.XX.O.OT.42305.mha",
+        "bytes": 8928170,
+        "sha1": "b918adaa401acf37a7b1db2e3487138a525c972a"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat135_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat135_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat135_0001/VSD.Brain.XX.O.MR_Flair.35573.mha",
+        "bytes": 1915530,
+        "sha1": "96d12ce3f8a2c8e4964fc691941e27319695ec99"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat135_0001/VSD.Brain_3more.XX.O.OT.42307.mha",
+        "bytes": 8928170,
+        "sha1": "90d665a7ac3ed206d0656a4e4899f34bdea05b2f"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat138_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat138_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat138_0001/VSD.Brain.XX.O.MR_Flair.35577.mha",
+        "bytes": 1802189,
+        "sha1": "69bf0ba15cae01dfff88795bd6196e2b6edeb9f3"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat138_0001/VSD.Brain_3more.XX.O.OT.42309.mha",
+        "bytes": 8928170,
+        "sha1": "0ae460712d3f5bb7f274d0056e0e76d0a119021d"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat147_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat147_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat147_0001/VSD.Brain.XX.O.MR_Flair.35591.mha",
+        "bytes": 1861102,
+        "sha1": "900543dbfb5a2cc0de7eb109dfdc1a873b4a54bb"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat147_0001/VSD.Brain_3more.XX.O.OT.42315.mha",
+        "bytes": 8928170,
+        "sha1": "12aa4e4956fc8f0d790dc56a799bb9470d4d23bd"
+      },
+      "split": "test"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat149_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat149_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat149_0001/VSD.Brain.XX.O.MR_Flair.35595.mha",
+        "bytes": 2087294,
+        "sha1": "f48938ffc488d767f2c91b414ef104b0e3e13a87"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat149_0001/VSD.Brain_3more.XX.O.OT.42317.mha",
+        "bytes": 8928170,
+        "sha1": "367e43620f3e458ecdd29897700bfb6f53691184"
+      },
+      "split": "val"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat150_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat150_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat150_0001/VSD.Brain.XX.O.MR_Flair.35599.mha",
+        "bytes": 1722782,
+        "sha1": "da8db5208c8e542d8d8223b2e5dd341de8af5e06"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat150_0001/VSD.Brain_3more.XX.O.OT.42319.mha",
+        "bytes": 8928170,
+        "sha1": "deb6676f173ba36217d74c479ab6f52ad8fb617f"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat151_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat151_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat151_0001/VSD.Brain.XX.O.MR_Flair.35603.mha",
+        "bytes": 1656374,
+        "sha1": "5b2d485110caaa21ca39f6f131fc24ec1607ff92"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat151_0001/VSD.Brain_3more.XX.O.OT.42321.mha",
+        "bytes": 8928170,
+        "sha1": "30deea3f27e5290ba6d786f5bcba1872d7662230"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat153_0002",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat153_0002",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat153_0002/VSD.Brain.XX.O.MR_Flair.40859.mha",
+        "bytes": 1583760,
+        "sha1": "e3d365292748ae6d5b612cf176df27ce2f8cfc5f"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat153_0002/VSD.Brain_3more.XX.O.OT.42335.mha",
+        "bytes": 8928170,
+        "sha1": "304d1e7970fe0360328e61628763ea9448a209bb"
+      },
+      "split": "test"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat153_0109",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat153_0109",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat153_0109/VSD.Brain.XX.O.MR_Flair.40839.mha",
+        "bytes": 1719240,
+        "sha1": "b4888de820ba8e5f07ea719da93280e5c486ffc6"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat153_0109/VSD.Brain_3more.XX.O.OT.42325.mha",
+        "bytes": 8928170,
+        "sha1": "d439ea6dc65750e8224a3549d3b464bb4175a5a2"
+      },
+      "split": "val"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat153_0165",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat153_0165",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat153_0165/VSD.Brain.XX.O.MR_Flair.40855.mha",
+        "bytes": 1728857,
+        "sha1": "9dc126d628f8d6b51de4953cc091a7dba1259b1e"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat153_0165/VSD.Brain_3more.XX.O.OT.42333.mha",
+        "bytes": 8928170,
+        "sha1": "0da4cc50f876a476b406082e23a399f8e4a1c003"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat153_0181",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat153_0181",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat153_0181/VSD.Brain.XX.O.MR_Flair.40851.mha",
+        "bytes": 1780371,
+        "sha1": "584fbecaefe83dcceef8c8dee3589ca8fec2f945"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat153_0181/VSD.Brain_3more.XX.O.OT.42331.mha",
+        "bytes": 8928170,
+        "sha1": "d45f279dacf5c1f1ae04f231b8806e2850809b6d"
+      },
+      "split": "test"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat153_0277",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat153_0277",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat153_0277/VSD.Brain.XX.O.MR_Flair.40847.mha",
+        "bytes": 1671110,
+        "sha1": "9a07269a91bc383f116bd592b873daa497e2ae32"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat153_0277/VSD.Brain_3more.XX.O.OT.42329.mha",
+        "bytes": 8928170,
+        "sha1": "7ac835c208aa5b1ce7c7f000b8a045bd5cb8dbe9"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat153_0294",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat153_0294",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat153_0294/VSD.Brain.XX.O.MR_Flair.40843.mha",
+        "bytes": 1862623,
+        "sha1": "7db078336d3de93f38e3e3a57d8f32baa9e02a73"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat153_0294/VSD.Brain_3more.XX.O.OT.42327.mha",
+        "bytes": 8928170,
+        "sha1": "a0c4f494dddb93c839a7df791412cd1d05c8a446"
+      },
+      "split": "test"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat156_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat156_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat156_0001/VSD.Brain.XX.O.MR_Flair.35607.mha",
+        "bytes": 1987698,
+        "sha1": "f0cb8f1172984e53f56e42f0e97553ba5be6abab"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat156_0001/VSD.Brain_3more.XX.O.OT.42885.mha",
+        "bytes": 8928170,
+        "sha1": "1dc8dbab1005b136c66e2102d29993b4b19a4b02"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat162_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat162_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat162_0001/VSD.Brain.XX.O.MR_Flair.35611.mha",
+        "bytes": 2109389,
+        "sha1": "65f9edc0655937e088d8e729325fdd98dd2439da"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat162_0001/VSD.Brain_3more.XX.O.OT.42339.mha",
+        "bytes": 8928170,
+        "sha1": "a5ab7af00ae760737d8fefe0de387a413ee00d4d"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat164_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat164_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat164_0001/VSD.Brain.XX.O.MR_Flair.35615.mha",
+        "bytes": 2309805,
+        "sha1": "0d6567704f345161f2c19ce94dfc19266165a3a4"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat164_0001/VSD.Brain_3more.XX.O.OT.42341.mha",
+        "bytes": 8928170,
+        "sha1": "adc0098983252b870b54d6b213812f1164895e9e"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat168_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat168_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat168_0001/VSD.Brain.XX.O.MR_Flair.35623.mha",
+        "bytes": 2413327,
+        "sha1": "67541b601446aa4d1bc0343d6534b384c58cedb5"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat168_0001/VSD.Brain_3more.XX.O.OT.42347.mha",
+        "bytes": 8928170,
+        "sha1": "49b1897d6139204a385e6c439b10372ec461f3f5"
+      },
+      "split": "val"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat170_0002",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat170_0002",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat170_0002/VSD.Brain.XX.O.MR_Flair.35627.mha",
+        "bytes": 2778778,
+        "sha1": "1b5665a036e54fcea0893a7dbba928fa2609d5ba"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat170_0002/VSD.Brain_3more.XX.O.OT.42349.mha",
+        "bytes": 8928170,
+        "sha1": "922a6efa6665c6435a7dcffdf26dba4b108ecf72"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat171_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat171_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat171_0001/VSD.Brain.XX.O.MR_Flair.35647.mha",
+        "bytes": 1792645,
+        "sha1": "1dc3a7036333e68675081757c7f818809fb5a3d2"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat171_0001/VSD.Brain_3more.XX.O.OT.42359.mha",
+        "bytes": 8928170,
+        "sha1": "7f8b37482f2413b9bcdae13512fa079ca24be18d"
+      },
+      "split": "val"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat171_0200",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat171_0200",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat171_0200/VSD.Brain.XX.O.MR_Flair.35651.mha",
+        "bytes": 1732557,
+        "sha1": "6537a80dd4ada6624b3db7aa1855c4f46540866b"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat171_0200/VSD.Brain_3more.XX.O.OT.42361.mha",
+        "bytes": 8928170,
+        "sha1": "fafaa1c5725418fb35389f7cfe0dd6c8d0354e1f"
+      },
+      "split": "val"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat171_0387",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat171_0387",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat171_0387/VSD.Brain.XX.O.MR_Flair.35659.mha",
+        "bytes": 1741562,
+        "sha1": "884352fce622bd44324701c953662adaa2ec588e"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat171_0387/VSD.Brain_3more.XX.O.OT.42365.mha",
+        "bytes": 8928170,
+        "sha1": "a431d478e631362ba2a0fa89b99be25a3ac1028a"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat171_0618",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat171_0618",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat171_0618/VSD.Brain.XX.O.MR_Flair.35643.mha",
+        "bytes": 1703938,
+        "sha1": "39cbd93b9223071824adf43ef4b99933de47f6d9"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat171_0618/VSD.Brain_3more.XX.O.OT.42357.mha",
+        "bytes": 8928170,
+        "sha1": "e4c8a2f5b0b234bd64542f0f999335fb84198a69"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat171_0950",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat171_0950",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat171_0950/VSD.Brain.XX.O.MR_Flair.35655.mha",
+        "bytes": 1775422,
+        "sha1": "c930b4cf998b7a78606a3456874bbe8aa35f8754"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat171_0950/VSD.Brain_3more.XX.O.OT.42363.mha",
+        "bytes": 8928170,
+        "sha1": "1c7d87e3a8845d0118cf56fd6eabfd139669512f"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat171_1126",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat171_1126",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat171_1126/VSD.Brain.XX.O.MR_Flair.35631.mha",
+        "bytes": 1799340,
+        "sha1": "54415b0d410d33f7a64781f31d1ccfb2316ed2d5"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat171_1126/VSD.Brain_3more.XX.O.OT.42351.mha",
+        "bytes": 8928170,
+        "sha1": "dae286551939cbfc17eb03bdbe3d323b3e520141"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat171_1231",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat171_1231",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat171_1231/VSD.Brain.XX.O.MR_Flair.35639.mha",
+        "bytes": 1813517,
+        "sha1": "5f44a7826075413f9802550ad2b9f2cc73f85296"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat171_1231/VSD.Brain_3more.XX.O.OT.42355.mha",
+        "bytes": 8928170,
+        "sha1": "2bf1ab02d610f597568180fe9af3177a0b6dcfe4"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat173_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat173_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat173_0001/VSD.Brain.XX.O.MR_Flair.35663.mha",
+        "bytes": 2438733,
+        "sha1": "0277993bfa1dff3eb3c9a2ea21a41f8075643cfa"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat173_0001/VSD.Brain_3more.XX.O.OT.42367.mha",
+        "bytes": 8928170,
+        "sha1": "677c7dc9fec4cf93006c673734d978a26da3b630"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat178_0002",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat178_0002",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat178_0002/VSD.Brain.XX.O.MR_Flair.35674.mha",
+        "bytes": 1750537,
+        "sha1": "f0c18434d33139a8496f8ec3ad7127055739293f"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat178_0002/VSD.Brain_3more.XX.O.OT.42373.mha",
+        "bytes": 8928170,
+        "sha1": "d3de0b00a5c2cbf5824bf4f3628510ddd4004839"
+      },
+      "split": "val"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat179_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat179_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat179_0001/VSD.Brain.XX.O.MR_Flair.40879.mha",
+        "bytes": 2007643,
+        "sha1": "3f441e39d698336a3c765600be4660477e021943"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat179_0001/VSD.Brain_3more.XX.O.OT.42375.mha",
+        "bytes": 8928170,
+        "sha1": "bc681493932f7872ce9715323696150c6d32cf4b"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat180_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat180_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat180_0001/VSD.Brain.XX.O.MR_Flair.35678.mha",
+        "bytes": 1979676,
+        "sha1": "807d7f72c334054e539d5904d6302b8284b166ed"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat180_0001/VSD.Brain_3more.XX.O.OT.42379.mha",
+        "bytes": 8928170,
+        "sha1": "d89c73ba67f63ce5b926883142b107dd36607e54"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat184_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat184_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat184_0001/VSD.Brain.XX.O.MR_Flair.35686.mha",
+        "bytes": 2054740,
+        "sha1": "3fb9cc7f38e9509a88edb9a0189920803caf249b"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat184_0001/VSD.Brain_3more.XX.O.OT.42383.mha",
+        "bytes": 8928170,
+        "sha1": "0cf1f3908253318c1d8a1c1c89b20cf783c17f27"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat192_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat192_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat192_0001/VSD.Brain.XX.O.MR_Flair.35694.mha",
+        "bytes": 1668953,
+        "sha1": "c3b4e6f4037a73d820d82ca08db818bfc627e3b1"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat192_0001/VSD.Brain_2more.XX.O.OT.42389.mha",
+        "bytes": 8928170,
+        "sha1": "0363f69dbf49a35c61b09f516acf1a2d1fa366c0"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat193_0002",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat193_0002",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat193_0002/VSD.Brain.XX.O.MR_Flair.35698.mha",
+        "bytes": 2611017,
+        "sha1": "76d364596239c1b56a0af597a2c9a1b97fddb5c4"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat193_0002/VSD.Brain_2more.XX.O.OT.42391.mha",
+        "bytes": 8928170,
+        "sha1": "baf2082995e2124f3c231822eb0306875bff3725"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat198_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat198_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat198_0001/VSD.Brain.XX.O.MR_Flair.35706.mha",
+        "bytes": 2132481,
+        "sha1": "c6826b186d1645f1b4cb4bafd4f64385c421501b"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat198_0001/VSD.Brain_3more.XX.O.OT.42393.mha",
+        "bytes": 8928170,
+        "sha1": "7fc2f61973a2c5fce2d87a7926a47e23d2c813c7"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat198_0283",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat198_0283",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat198_0283/VSD.Brain.XX.O.MR_Flair.35710.mha",
+        "bytes": 2407116,
+        "sha1": "2e848fc38d14712e987af90a43a15e03d2330651"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat198_0283/VSD.Brain_3more.XX.O.OT.42395.mha",
+        "bytes": 8928170,
+        "sha1": "9bb7d07bbba7d78d8b01468c67639038d131981a"
+      },
+      "split": "test"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat199_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat199_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat199_0001/VSD.Brain.XX.O.MR_Flair.35714.mha",
+        "bytes": 1863323,
+        "sha1": "8aed48ef7515d190f12592a78bf292655a3f5e46"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat199_0001/VSD.Brain_3more.XX.O.OT.42397.mha",
+        "bytes": 8928170,
+        "sha1": "ea99e6b6a5dba9a8d6e8ef499564beb2aaee2927"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat200_0210",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat200_0210",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat200_0210/VSD.Brain.XX.O.MR_Flair.40895.mha",
+        "bytes": 2414060,
+        "sha1": "3a324dcbb3b1dc0693b215f0a8ec58ba57650e40"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat200_0210/VSD.Brain_3more.XX.O.OT.42399.mha",
+        "bytes": 8928170,
+        "sha1": "3be766bcc22b8ee23ec82463e0fd689c25e31821"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat201_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat201_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat201_0001/VSD.Brain.XX.O.MR_Flair.40903.mha",
+        "bytes": 2074962,
+        "sha1": "5a019ecc54093037a6bd90f1dba9b6e4db46dbf9"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat201_0001/VSD.Brain_3more.XX.O.OT.42401.mha",
+        "bytes": 8928170,
+        "sha1": "a90d41c5a2dc53dc76e8e0873e5c29dbb9535881"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat203_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat203_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat203_0001/VSD.Brain.XX.O.MR_Flair.35722.mha",
+        "bytes": 1802220,
+        "sha1": "e756e7cf497904c6c27f8bda1af4f79fc93976fa"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat203_0001/VSD.Brain_3more.XX.O.OT.42405.mha",
+        "bytes": 8928170,
+        "sha1": "9cfbab9239e106e5ef7a53b6ced203e1f56a1664"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat205_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat205_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat205_0001/VSD.Brain.XX.O.MR_Flair.35728.mha",
+        "bytes": 2339823,
+        "sha1": "e2f440dceb0ad22fa89c6cd8e27eecafc04c6dc9"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat205_0001/VSD.Brain_3more.XX.O.OT.42407.mha",
+        "bytes": 8928170,
+        "sha1": "60cafb2fdbe510eddf0064dbb8a3adb8eef45d3a"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat208_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat208_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat208_0001/VSD.Brain.XX.O.MR_Flair.35732.mha",
+        "bytes": 2280805,
+        "sha1": "799132e41f843f74b693ee47b0d7592a71c974a3"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat208_0001/VSD.Brain_3more.XX.O.OT.42409.mha",
+        "bytes": 8928170,
+        "sha1": "73a77467800d51528a3aea21ad70ddaa6c2dc67c"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat211_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat211_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat211_0001/VSD.Brain.XX.O.MR_Flair.35736.mha",
+        "bytes": 1984125,
+        "sha1": "70fca4c784df481b26cc7cb930c724b41d72431b"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat211_0001/VSD.Brain_3more.XX.O.OT.42895.mha",
+        "bytes": 8928170,
+        "sha1": "f670cbca53850f830b9da145df49ca873fbc25e8"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat218_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat218_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat218_0001/VSD.Brain.XX.O.MR_Flair.35756.mha",
+        "bytes": 1589352,
+        "sha1": "54c13378d50a5b8691e072703b926167abd7f720"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat218_0001/VSD.Brain_3more.XX.O.OT.42419.mha",
+        "bytes": 8928170,
+        "sha1": "6fa276c03f7076d5a3d928c9446a7da3708d654e"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat222_0122",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat222_0122",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat222_0122/VSD.Brain.XX.O.MR_Flair.40915.mha",
+        "bytes": 1883826,
+        "sha1": "231003d33d295572708359aedacd85e69d43d0e4"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat222_0122/VSD.Brain_3more.XX.O.OT.42427.mha",
+        "bytes": 8928170,
+        "sha1": "466f5c1e03be454d660f977719170864c0cd2410"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat222_0304",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat222_0304",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat222_0304/VSD.Brain.XX.O.MR_Flair.40907.mha",
+        "bytes": 1967733,
+        "sha1": "a5f3c37701e33c675d24eaaa10e7207b048c062e"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat222_0304/VSD.Brain_3more.XX.O.OT.42423.mha",
+        "bytes": 8928170,
+        "sha1": "1804b6ec470338b7fb2e2c49d50cacfa5e81be1c"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat226_0090",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat226_0090",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat226_0090/VSD.Brain.XX.O.MR_Flair.40923.mha",
+        "bytes": 1817388,
+        "sha1": "e5b20d0a456715c2ef784806e9a243d2311b59e8"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat226_0090/VSD.Brain_3more.XX.O.OT.42433.mha",
+        "bytes": 8928170,
+        "sha1": "e6937cc80c915a9923485cd834ae29d959647968"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat230_0481",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat230_0481",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat230_0481/VSD.Brain.XX.O.MR_Flair.35776.mha",
+        "bytes": 1912246,
+        "sha1": "fdff56fd4056e39c1941c67861cc792fb24ad746"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat230_0481/VSD.Brain_3more.XX.O.OT.42437.mha",
+        "bytes": 8928170,
+        "sha1": "3c3a0f4ad53b804a9b2706bc660f60f051585f84"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat230_0637",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat230_0637",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat230_0637/VSD.Brain.XX.O.MR_Flair.35792.mha",
+        "bytes": 1930579,
+        "sha1": "aaeece1651eb73dd09e3fa4c69290f0fffa7b826"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat230_0637/VSD.Brain_3more.XX.O.OT.42443.mha",
+        "bytes": 8928170,
+        "sha1": "f6411053dbfa80adb620d341d1f0921060c5fd38"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat230_0710",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat230_0710",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat230_0710/VSD.Brain.XX.O.MR_Flair.35788.mha",
+        "bytes": 2033996,
+        "sha1": "187c418b0bc32ddacedcde8b72ed8d35d8ffe032"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat230_0710/VSD.Brain_3more.XX.O.OT.42441.mha",
+        "bytes": 8928170,
+        "sha1": "7f217e7d5d9bd89655b15bbd4693085ee9dfbc83"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat231_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat231_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat231_0001/VSD.Brain.XX.O.MR_Flair.40927.mha",
+        "bytes": 1662461,
+        "sha1": "e503344537e7e60a98f33991f184b11266509a00"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat231_0001/VSD.Brain_3more.XX.O.OT.42447.mha",
+        "bytes": 8928170,
+        "sha1": "4b807f426e911e03e0ceee23897d893af7a42e51"
+      },
+      "split": "test"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat234_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat234_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat234_0001/VSD.Brain.XX.O.MR_Flair.35800.mha",
+        "bytes": 2373303,
+        "sha1": "dcf57b115818b31f179d220caff944beffbce3c4"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat234_0001/VSD.Brain_3more.XX.O.OT.42449.mha",
+        "bytes": 8928170,
+        "sha1": "0906373f6a948ed71f7a442affd1fe4ee8a654d2"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat235_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat235_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat235_0001/VSD.Brain.XX.O.MR_Flair.35804.mha",
+        "bytes": 1924062,
+        "sha1": "87adc6f59606d92ab72274a03d5cfb35901f13d3"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat235_0001/VSD.Brain_3more.XX.O.OT.42451.mha",
+        "bytes": 8928170,
+        "sha1": "f952e2fd950155563cd363e1c60c03c8f397fb53"
+      },
+      "split": "test"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat242_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat242_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat242_0001/VSD.Brain.XX.O.MR_Flair.35808.mha",
+        "bytes": 2245635,
+        "sha1": "a45caa1f26ebe0c10059fdafbd8e69996dc9b06f"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat242_0001/VSD.Brain_3more.XX.O.OT.42455.mha",
+        "bytes": 8928170,
+        "sha1": "61834737ea01a04d12ce41876311ea00ee9097df"
+      },
+      "split": "test"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat247_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat247_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat247_0001/VSD.Brain.XX.O.MR_Flair.35820.mha",
+        "bytes": 2092118,
+        "sha1": "e597f6806790fd114e1ea4d70131130a26c14744"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat247_0001/VSD.Brain_3more.XX.O.OT.42457.mha",
+        "bytes": 8928170,
+        "sha1": "212d1aed0d1ee532653f897b26085cfa14f8e7a6"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat257_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat257_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat257_0001/VSD.Brain.XX.O.MR_Flair.35848.mha",
+        "bytes": 2250545,
+        "sha1": "16a391a7ec2d0a61c5243360b369dd20756e80c1"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat257_0001/VSD.Brain_3more.XX.O.OT.42469.mha",
+        "bytes": 8928170,
+        "sha1": "3377491ae1daac9cdf19e7b59c662e05aff25014"
+      },
+      "split": "val"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat258_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat258_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat258_0001/VSD.Brain.XX.O.MR_Flair.40935.mha",
+        "bytes": 2207700,
+        "sha1": "9107eb36324a6c53554d05e3dcab05706a3e684f"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat258_0001/VSD.Brain_3more.XX.O.OT.42471.mha",
+        "bytes": 8928170,
+        "sha1": "5f2f0f8bf4c1623db023105a887c4a69454b02ee"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat260_0001",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat260_0001",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat260_0001/VSD.Brain.XX.O.MR_Flair.35872.mha",
+        "bytes": 2234530,
+        "sha1": "4e6f72b3f34c10ad3b6aba8515dcec2ce594b454"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat260_0001/VSD.Brain_3more.XX.O.OT.42483.mha",
+        "bytes": 8928170,
+        "sha1": "df4649bef4a2762ef6d28bc378d5b8fb5a9db44b"
+      },
+      "split": "test"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat260_0129",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat260_0129",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat260_0129/VSD.Brain.XX.O.MR_Flair.35864.mha",
+        "bytes": 2268360,
+        "sha1": "9459d936e41bde0267e4c3d549538032515c42a6"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat260_0129/VSD.Brain_3more.XX.O.OT.42479.mha",
+        "bytes": 8928170,
+        "sha1": "f2e9a84054947a3f4a472727133469569d56bfc7"
+      },
+      "split": "val"
+    },
+    {
+      "case_id": "HGG/brats_tcia_pat260_0152",
+      "grade": "HGG",
+      "patient_id": "brats_tcia_pat260_0152",
+      "flair": {
+        "path": "training/HGG/brats_tcia_pat260_0152/VSD.Brain.XX.O.MR_Flair.35860.mha",
+        "bytes": 2262711,
+        "sha1": "5ce1012ceb9aad7b218813b13c2eec8d63ba1b51"
+      },
+      "mask": {
+        "path": "training/HGG/brats_tcia_pat260_0152/VSD.Brain_3more.XX.O.OT.42477.mha",
+        "bytes": 8928170,
+        "sha1": "be1479124aa838746ca90aa9595ce192d6407cee"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "LGG/brats_2013_pat0006_1",
+      "grade": "LGG",
+      "patient_id": "brats_2013_pat0006_1",
+      "flair": {
+        "path": "training/LGG/brats_2013_pat0006_1/VSD.Brain.XX.O.MR_Flair.54650.mha",
+        "bytes": 2098442,
+        "sha1": "8ec5b7d983c10e2931d58f5fc147b1624b9b76e4"
+      },
+      "mask": {
+        "path": "training/LGG/brats_2013_pat0006_1/VSD.Brain_1more.XX.O.OT.54655.mha",
+        "bytes": 23224,
+        "sha1": "b78977aa9f102647f349554d3dd04668e87ff16b"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "LGG/brats_2013_pat0012_1",
+      "grade": "LGG",
+      "patient_id": "brats_2013_pat0012_1",
+      "flair": {
+        "path": "training/LGG/brats_2013_pat0012_1/VSD.Brain.XX.O.MR_Flair.54668.mha",
+        "bytes": 1805949,
+        "sha1": "4e6c6fa669ae7705dbb966a313437e775493f5b5"
+      },
+      "mask": {
+        "path": "training/LGG/brats_2013_pat0012_1/VSD.Brain_1more.XX.O.OT.54673.mha",
+        "bytes": 26795,
+        "sha1": "c6fd3dda55d947cd2c6f0e9f9e806bddf11351dc"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "LGG/brats_2013_pat0013_1",
+      "grade": "LGG",
+      "patient_id": "brats_2013_pat0013_1",
+      "flair": {
+        "path": "training/LGG/brats_2013_pat0013_1/VSD.Brain.XX.O.MR_Flair.54674.mha",
+        "bytes": 1838128,
+        "sha1": "93fb910d19fc9dba81259b96f506434ea4c7eba2"
+      },
+      "mask": {
+        "path": "training/LGG/brats_2013_pat0013_1/VSD.Brain_2more.XX.O.OT.54679.mha",
+        "bytes": 31816,
+        "sha1": "0696717c00d6d12be3c3d9d0690c7c43626d2af7"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "LGG/brats_tcia_pat101_0001",
+      "grade": "LGG",
+      "patient_id": "brats_tcia_pat101_0001",
+      "flair": {
+        "path": "training/LGG/brats_tcia_pat101_0001/VSD.Brain.XX.O.MR_Flair.35529.mha",
+        "bytes": 2048489,
+        "sha1": "e4329ac0821ce0d242d0021d8bffb6b863982bbd"
+      },
+      "mask": {
+        "path": "training/LGG/brats_tcia_pat101_0001/VSD.Brain_3more.XX.O.OT.42279.mha",
+        "bytes": 8928170,
+        "sha1": "23266676d73a709ad8f0a44f11ee02c0d8024c64"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "LGG/brats_tcia_pat103_0001",
+      "grade": "LGG",
+      "patient_id": "brats_tcia_pat103_0001",
+      "flair": {
+        "path": "training/LGG/brats_tcia_pat103_0001/VSD.Brain.XX.O.MR_Flair.40819.mha",
+        "bytes": 1813517,
+        "sha1": "6ddd145323d185bf734e4a83b49ae7f57dc435ed"
+      },
+      "mask": {
+        "path": "training/LGG/brats_tcia_pat103_0001/VSD.Brain_3more.XX.O.OT.42281.mha",
+        "bytes": 8928170,
+        "sha1": "c713cd79793c6d3629aefd0ca783f5afd6aeedba"
+      },
+      "split": "test"
+    },
+    {
+      "case_id": "LGG/brats_tcia_pat130_0001",
+      "grade": "LGG",
+      "patient_id": "brats_tcia_pat130_0001",
+      "flair": {
+        "path": "training/LGG/brats_tcia_pat130_0001/VSD.Brain.XX.O.MR_Flair.40831.mha",
+        "bytes": 1810789,
+        "sha1": "f6ad4dc99d187d4fdeb7e19d5723f17f4e917d5d"
+      },
+      "mask": {
+        "path": "training/LGG/brats_tcia_pat130_0001/VSD.Brain_3more.XX.O.OT.42301.mha",
+        "bytes": 8928170,
+        "sha1": "fb0b0c7354020235931f9918a5e9534e503a5477"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "LGG/brats_tcia_pat255_0001",
+      "grade": "LGG",
+      "patient_id": "brats_tcia_pat255_0001",
+      "flair": {
+        "path": "training/LGG/brats_tcia_pat255_0001/VSD.Brain.XX.O.MR_Flair.35844.mha",
+        "bytes": 2101914,
+        "sha1": "5b3b0aae1c005d7c58619b1ab16e2e79fffb1bca"
+      },
+      "mask": {
+        "path": "training/LGG/brats_tcia_pat255_0001/VSD.Brain_3more.XX.O.OT.42467.mha",
+        "bytes": 8928170,
+        "sha1": "3fc4ee2e76dd72d6651086ba38b5e953bda8b7e6"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "LGG/brats_tcia_pat282_0001",
+      "grade": "LGG",
+      "patient_id": "brats_tcia_pat282_0001",
+      "flair": {
+        "path": "training/LGG/brats_tcia_pat282_0001/VSD.Brain.XX.O.MR_Flair.40943.mha",
+        "bytes": 1993635,
+        "sha1": "d9d9256351afea8f0eb46f7aab3c6f4fb43ccadd"
+      },
+      "mask": {
+        "path": "training/LGG/brats_tcia_pat282_0001/VSD.Brain_3more.XX.O.OT.42507.mha",
+        "bytes": 8928170,
+        "sha1": "94f1d3046cc7c76b2bb95a947b10e8b6593c80e4"
+      },
+      "split": "val"
+    },
+    {
+      "case_id": "LGG/brats_tcia_pat307_0001",
+      "grade": "LGG",
+      "patient_id": "brats_tcia_pat307_0001",
+      "flair": {
+        "path": "training/LGG/brats_tcia_pat307_0001/VSD.Brain.XX.O.MR_Flair.40971.mha",
+        "bytes": 2037165,
+        "sha1": "c038f9bd11701b950394016a2657235ab8e64ef6"
+      },
+      "mask": {
+        "path": "training/LGG/brats_tcia_pat307_0001/VSD.Brain_3more.XX.O.OT.42539.mha",
+        "bytes": 8928170,
+        "sha1": "ef6a65f6e4aa6dc1c3dc5229dae559a299064dd3"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "LGG/brats_tcia_pat346_0001",
+      "grade": "LGG",
+      "patient_id": "brats_tcia_pat346_0001",
+      "flair": {
+        "path": "training/LGG/brats_tcia_pat346_0001/VSD.Brain.XX.O.MR_Flair.41040.mha",
+        "bytes": 2334406,
+        "sha1": "94f613b7feef838ebe490a9ae9a6a66760206a71"
+      },
+      "mask": {
+        "path": "training/LGG/brats_tcia_pat346_0001/VSD.Brain_3more.XX.O.OT.42599.mha",
+        "bytes": 8928170,
+        "sha1": "72d44fae8e6589e24bdcb7e2d7f07a798ab8d25a"
+      },
+      "split": "test"
+    },
+    {
+      "case_id": "LGG/brats_tcia_pat351_0001",
+      "grade": "LGG",
+      "patient_id": "brats_tcia_pat351_0001",
+      "flair": {
+        "path": "training/LGG/brats_tcia_pat351_0001/VSD.Brain.XX.O.MR_Flair.36045.mha",
+        "bytes": 2168797,
+        "sha1": "d22458490714227fcc9afbb6c4083e315123cc74"
+      },
+      "mask": {
+        "path": "training/LGG/brats_tcia_pat351_0001/VSD.Brain_3more.XX.O.OT.42605.mha",
+        "bytes": 8928170,
+        "sha1": "dd247b4aa2b8e66f8b0c4c6ead7877068870435e"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "LGG/brats_tcia_pat387_0001",
+      "grade": "LGG",
+      "patient_id": "brats_tcia_pat387_0001",
+      "flair": {
+        "path": "training/LGG/brats_tcia_pat387_0001/VSD.Brain.XX.O.MR_Flair.41064.mha",
+        "bytes": 1955746,
+        "sha1": "c18056164f2ce59d6da597b2e83873d2f87b3c0d"
+      },
+      "mask": {
+        "path": "training/LGG/brats_tcia_pat387_0001/VSD.Brain_3more.XX.O.OT.42643.mha",
+        "bytes": 8928170,
+        "sha1": "2c223235fd4307fd9679c89df1914eaf56c7fa5f"
+      },
+      "split": "val"
+    },
+    {
+      "case_id": "LGG/brats_tcia_pat393_0001",
+      "grade": "LGG",
+      "patient_id": "brats_tcia_pat393_0001",
+      "flair": {
+        "path": "training/LGG/brats_tcia_pat393_0001/VSD.Brain.XX.O.MR_Flair.41088.mha",
+        "bytes": 2359248,
+        "sha1": "ee02897d4d53a52ceeaa30e082f016474214b221"
+      },
+      "mask": {
+        "path": "training/LGG/brats_tcia_pat393_0001/VSD.Brain_3more.XX.O.OT.42659.mha",
+        "bytes": 8928170,
+        "sha1": "8fdbd4826dbd0cf0b027d34e52fa0729edca98f7"
+      },
+      "split": "val"
+    },
+    {
+      "case_id": "LGG/brats_tcia_pat402_0001",
+      "grade": "LGG",
+      "patient_id": "brats_tcia_pat402_0001",
+      "flair": {
+        "path": "training/LGG/brats_tcia_pat402_0001/VSD.Brain.XX.O.MR_Flair.36246.mha",
+        "bytes": 2285489,
+        "sha1": "ce091bf184b67c4adcb43319c56e5ba7d34f2765"
+      },
+      "mask": {
+        "path": "training/LGG/brats_tcia_pat402_0001/VSD.Brain_3more.XX.O.OT.42703.mha",
+        "bytes": 8928170,
+        "sha1": "5aa312e66ee2791e1a7b9a55d9a8beb504da1dea"
+      },
+      "split": "test"
+    },
+    {
+      "case_id": "LGG/brats_tcia_pat413_0001",
+      "grade": "LGG",
+      "patient_id": "brats_tcia_pat413_0001",
+      "flair": {
+        "path": "training/LGG/brats_tcia_pat413_0001/VSD.Brain.XX.O.MR_Flair.36276.mha",
+        "bytes": 2226967,
+        "sha1": "381ad683245df691ad3ff5eb4ce1c88aa98a8e0a"
+      },
+      "mask": {
+        "path": "training/LGG/brats_tcia_pat413_0001/VSD.Brain_2more.XX.O.OT.42721.mha",
+        "bytes": 8928170,
+        "sha1": "3b8a8115b747a1c963fe9858a85a466cc2919834"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "LGG/brats_tcia_pat420_0001",
+      "grade": "LGG",
+      "patient_id": "brats_tcia_pat420_0001",
+      "flair": {
+        "path": "training/LGG/brats_tcia_pat420_0001/VSD.Brain.XX.O.MR_Flair.41104.mha",
+        "bytes": 1874987,
+        "sha1": "9bf898552a9ac98cb9a40e000d274d363c785540"
+      },
+      "mask": {
+        "path": "training/LGG/brats_tcia_pat420_0001/VSD.Brain_3more.XX.O.OT.42727.mha",
+        "bytes": 8928170,
+        "sha1": "580894b329e9e352180f5de93e63f57e6b591719"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "LGG/brats_tcia_pat451_0001",
+      "grade": "LGG",
+      "patient_id": "brats_tcia_pat451_0001",
+      "flair": {
+        "path": "training/LGG/brats_tcia_pat451_0001/VSD.Brain.XX.O.MR_Flair.41139.mha",
+        "bytes": 2001107,
+        "sha1": "4fd29776a736c027c24d93c688edf933aaf99d49"
+      },
+      "mask": {
+        "path": "training/LGG/brats_tcia_pat451_0001/VSD.Brain_3more.XX.O.OT.42791.mha",
+        "bytes": 8928170,
+        "sha1": "3af98586c7041fddef73cc4f6efb0145ed715c2b"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "LGG/brats_tcia_pat466_0001",
+      "grade": "LGG",
+      "patient_id": "brats_tcia_pat466_0001",
+      "flair": {
+        "path": "training/LGG/brats_tcia_pat466_0001/VSD.Brain.XX.O.MR_Flair.36559.mha",
+        "bytes": 2013731,
+        "sha1": "0d5db114f08ecf2cc4d67c325d5bb04012f609bf"
+      },
+      "mask": {
+        "path": "training/LGG/brats_tcia_pat466_0001/VSD.Brain_3more.XX.O.OT.42801.mha",
+        "bytes": 8928170,
+        "sha1": "bf6542f686bd8cca4fbe749ea34e1d3f04bdb61a"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "LGG/brats_tcia_pat483_0001",
+      "grade": "LGG",
+      "patient_id": "brats_tcia_pat483_0001",
+      "flair": {
+        "path": "training/LGG/brats_tcia_pat483_0001/VSD.Brain.XX.O.MR_Flair.36595.mha",
+        "bytes": 2270564,
+        "sha1": "4e05f06651a9e710b222c1b0f6b828afd984e30f"
+      },
+      "mask": {
+        "path": "training/LGG/brats_tcia_pat483_0001/VSD.Brain_3more.XX.O.OT.42821.mha",
+        "bytes": 8928170,
+        "sha1": "c67875029fe72110123ff7da4aef2acc5dd256a8"
+      },
+      "split": "train"
+    },
+    {
+      "case_id": "LGG/brats_tcia_pat490_0001",
+      "grade": "LGG",
+      "patient_id": "brats_tcia_pat490_0001",
+      "flair": {
+        "path": "training/LGG/brats_tcia_pat490_0001/VSD.Brain.XX.O.MR_Flair.36599.mha",
+        "bytes": 1706551,
+        "sha1": "94f66f628c42f1f4ef66aba121a93da5ef0b0cfd"
+      },
+      "mask": {
+        "path": "training/LGG/brats_tcia_pat490_0001/VSD.Brain_3more.XX.O.OT.42823.mha",
+        "bytes": 8928170,
+        "sha1": "2b10a041c914e874bf8b982bf1e24e3b6746d625"
+      },
+      "split": "train"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+# Windows Python environment and editor state
+.venv/
+.env
+.env.*
+.ipynb_checkpoints/
+.vscode/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# BraTS data, downloader cache and generated status
+data/raw/**
+!data/raw/.gitkeep
+data/processed/**
+!data/processed/.gitkeep
+data/metadata/**
+!data/metadata/.gitkeep
+data/download_report.json
+data/download*.log
+
+# Checkpoints and generated reports
+runs/**
+!runs/.gitkeep
+reports/figures/**
+!reports/figures/.gitkeep
+reports/benchmark.csv
+reports/per_patient.csv
+reports/hardware_profile.md
+reports/slides.pdf
+
+# Build artifacts
+*.egg-info/
+build/
+dist/

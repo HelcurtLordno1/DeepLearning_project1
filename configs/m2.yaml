@@ -1,0 +1,9 @@
+model: m2
+architecture: unet
+encoder_name: resnet18
+encoder_weights: null
+encoder_depth: 5
+decoder_channels: [256, 128, 64, 32, 16]
+input_channels: 3
+output_channels: 1
+learning_rate: 0.001

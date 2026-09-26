@@ -1,0 +1,28 @@
+dataset:
+  name: BraTS2015
+  raw_root: data/raw/BRATS2015
+  source_manifest: data/source_manifest.json
+  split_manifest: data/splits_v1.csv
+  modality: FLAIR
+  target: WT
+  target_labels: [1, 2, 3, 4]
+  cases: 100
+  hgg_cases: 80
+  lgg_cases: 20
+  slices_per_case: 32
+  slice_depth_fraction: [0.20, 0.80]
+  image_size: [128, 128]
+
+benchmark:
+  split_cases: {train: 70, val: 15, test: 15}
+  seeds: [42, 123, 2026]
+  primary_metric: patient_mean_dice_wt
+  threshold_grid: [0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70]
+  test_policy: evaluate_after_all_configs_locked
+
+training:
+  max_epochs: 30
+  effective_batch_size: 16
+  optimizer: AdamW
+  loss: bce_with_logits_plus_soft_dice
+  use_cuda_amp: true
