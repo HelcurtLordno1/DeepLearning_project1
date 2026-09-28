@@ -1,7 +1,10 @@
 # M3 — U-Net/ResNet-18 transfer learning
 
-**Chủ sở hữu:** Thành viên 3. Notebook chính sẽ là `M3.ipynb` trong thư mục này; hiện chưa có code huấn luyện.
+**Owner:** thành viên 3. [M3.ipynb](M3.ipynb) là bản đọc/trình bày/chạy chính; [M3.py](M3.py) là cách chạy PowerShell. Cả hai tự chứa toàn bộ pipeline và **cùng class `ResidualUNet` với M2**. M3 dùng `ResNet18_Weights.IMAGENET1K_V1`, freeze encoder 5 epoch rồi mở `layer4` tối đa 25 epoch; không import mã M2.
 
-Cùng kiến trúc U-Net/ResNet-18 với M2. Encoder dùng trọng số ImageNet; học decoder/head khi encoder đóng băng 5 epoch, sau đó mở `layer4` để fine-tune tối đa 25 epoch. M3 không dùng thêm modality hoặc ca bệnh khác.
+```powershell
+& .\.venv\Scripts\python.exe .\M3\M3.py --smoke
+& .\.venv\Scripts\python.exe .\M3\M3.py --train --seed 42
+```
 
-Checklist, file bàn giao và tiêu chí nghiệm thu: [Detail_jobs.md](../Detail_jobs.md#thành-viên-3--m3-và-tích-hợp-benchmark). Nguồn đọc: [PyTorch Transfer Learning](https://docs.pytorch.org/tutorials/beginner/transfer_learning_tutorial.html), [Segmentation Models PyTorch U-Net](https://github.com/qubvel-org/segmentation_models.pytorch/blob/main/docs/quickstart.rst).
+Chạy từ **root trong Windows PowerShell**; lần đầu tải ImageNet weights qua `torchvision`. Notebook dùng kernel Windows `.venv`, cell cuối mặc định smoke. Lặp full với seed 123/2026; `--test` sau khi cả ba Mx khóa checkpoint. Artifacts trong `runs/smoke/m3/42/` hoặc `runs/m3/<seed>/`. Đọc [phân công](../Detail_jobs.md#5-thành-viên-3--m3-transfer-learning-và-tích-hợp), [PyTorch transfer learning](https://docs.pytorch.org/tutorials/beginner/transfer_learning_tutorial.html), [ResNet weights](https://docs.pytorch.org/vision/main/models/generated/torchvision.models.resnet18).

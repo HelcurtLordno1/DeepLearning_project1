@@ -1,7 +1,10 @@
 # M2 — U-Net/ResNet-18 từ đầu
 
-**Chủ sở hữu:** Thành viên 2. Notebook chính sẽ là `M2.ipynb` trong thư mục này; hiện chưa có code huấn luyện.
+**Owner:** thành viên 2. [M2.ipynb](M2.ipynb) là bản đọc/trình bày/chạy chính; [M2.py](M2.py) là cách chạy PowerShell. Cả hai tự chứa toàn bộ pipeline và class `ResidualUNet` với ResNet-18 encoder random, bốn up-block/skip, head phân đoạn. Class/decoder phải khớp M3; không import mã M3.
 
-U-Net 2D dùng encoder ResNet-18 khởi tạo ngẫu nhiên, decoder có skip connection. M2 và M3 phải gọi **cùng factory**; chỉ giá trị `encoder_weights` và lịch train khác. Đầu vào FLAIR `3×128×128`, đầu ra logits WT `1×128×128`.
+```powershell
+& .\.venv\Scripts\python.exe .\M2\M2.py --smoke
+& .\.venv\Scripts\python.exe .\M2\M2.py --train --seed 42
+```
 
-Checklist, file bàn giao và tiêu chí nghiệm thu: [Detail_jobs.md](../Detail_jobs.md#thành-viên-2--m2-và-huấn-luyện-chung). Nguồn đọc: [U-Net](https://arxiv.org/abs/1505.04597), [ResNet](https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html).
+Chạy từ **root trong Windows PowerShell**; notebook dùng kernel Windows `.venv`, cell cuối mặc định smoke. Lặp full với seed 123/2026; `--test` sau khi cả ba Mx khóa checkpoint. Artifacts trong `runs/smoke/m2/42/` hoặc `runs/m2/<seed>/`. Đọc [phân công](../Detail_jobs.md#4-thành-viên-2--m2-u-netresnet-18-từ-đầu), [U-Net](https://arxiv.org/abs/1505.04597), [ResNet](https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html).

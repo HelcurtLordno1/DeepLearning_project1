@@ -1,199 +1,142 @@
 # BraTS 2015 Light Benchmark — M1 / M2 / M3
 
-**Đề tài:** phân đoạn *whole tumor* (WT) trên MRI FLAIR 2D của BraTS 2015. Mục tiêu là so sánh mạng đơn giản (M1), mạng sâu (M2) và transfer learning/fine-tune (M3) trên **cùng bệnh nhân, cùng ảnh đầu vào, cùng nhãn và cùng giao thức đánh giá**. Đây là benchmark nội bộ trên tập con, không phải điểm chính thức của BraTS.
+**Bài toán:** phân đoạn *whole tumor* (WT) nhị phân từ lát MRI FLAIR 2D. M1 là CNN nông; M2 là U-Net với encoder ResNet-18 khởi tạo ngẫu nhiên; M3 dùng đúng kiến trúc M2 với encoder ImageNet và fine-tune. Đây là benchmark nội bộ trên **cùng 100 ca BraTS 2015**, không phải điểm chính thức của challenge.
 
-> **Trạng thái hiện tại:** cây thư mục, Windows `.venv`, config, package khung, script tải/kiểm tra dữ liệu, manifest, checksum và README của M1/M2/M3 đã được tạo; **201/201 file dữ liệu đã qua kiểm tra** trên máy này. **Notebook huấn luyện, pipeline mô hình và script train/evaluate vẫn là công việc của các thành viên**; chưa có điểm thực nghiệm. Trong cây bên dưới, các file `.ipynb` và Python entry point train/evaluate/compare/profile là **mục tiêu tiếp theo**.
+**Trạng thái kiểm tra:** 201/201 file raw đúng SHA-256; cache đã tạo đủ 100 ca; cả ba `Mx.py --smoke` và ba notebook chạy từ đầu tới cuối trên **Windows `.venv` + CUDA**. Chưa chạy full 3 seed/test, nên chưa có điểm benchmark cuối.
 
-- [Thiết kế dataset, mô hình và benchmark](Project_structure.md)
-- [Danh sách việc và phân công 1 Mx / 1 thành viên](Detail_jobs.md)
-- [Quy tắc cho agent và người đóng góp](AGENTS.md)
-
-## Hai cách chạy bắt buộc trên Windows
-
-**Cách chính — notebook `.ipynb`:** chạy `notebooks/00_prepare.ipynb`, sau đó `M1/M1.ipynb`, `M2/M2.ipynb`, `M3/M3.ipynb`; cuối cùng `notebooks/90_compare.ipynb`. Mỗi notebook phải chạy được bằng **Restart Kernel + Run All** với kernel Windows `.venv`, không cần chạy notebook khác để giữ biến trong bộ nhớ.
-
-**Cách thứ hai — PowerShell gọi file Python:** từ project root, chạy `scripts/prepare_data.py`, `scripts/train.py --model m1|m2|m3`, `scripts/evaluate.py` và `scripts/compare.py` bằng `.\.venv\Scripts\python.exe`. Notebook và script chỉ là hai entry point; cả hai gọi chung các hàm trong `src/brats_benchmark/`. Vì vậy, đổi cách chạy không đổi split, preprocessing, loss hay metric.
-
-```mermaid
-flowchart LR
-    D["BraTS 2015 FLAIR + OT"] --> P["brats_benchmark: audit, split, preprocess"]
-    P --> T["brats_benchmark: train/evaluate chung"]
-    N["Notebook chính: 00 / M1 / M2 / M3 / 90"] --> T
-    C["PowerShell: scripts/*.py"] --> T
-    T --> O["runs/ + reports/: checkpoint, Dice, hình, thời gian"]
-```
-
-## Ba mô hình, một benchmark
-
-| Mức | Kiến trúc | Khởi tạo | Input → output |
-|---|---|---|---|
-| **M1** | CNN/FCN nông, 3 Conv 3×3 | Ngẫu nhiên | `3×128×128 → 1×128×128` logits |
-| **M2** | U-Net 2D, encoder ResNet-18 | Toàn bộ ngẫu nhiên | `3×128×128 → 1×128×128` logits |
-| **M3** | **Cùng U-Net/ResNet-18 và decoder của M2** | Encoder ImageNet; decoder/head ngẫu nhiên, rồi fine-tune | `3×128×128 → 1×128×128` logits |
-
-Một lát FLAIR được lặp sang ba kênh; cả ba mô hình dùng cùng tensor. M2/M3 dùng cùng factory mô hình; M3 học decoder/head khi đóng băng encoder trong 5 epoch, sau đó mở `layer4` tối đa 25 epoch. Điểm M2–M3 phản ánh **cả pretrained weights và lịch fine-tune**. Cùng 100 bệnh nhân (80 HGG, 20 LGG), split theo bệnh nhân 70/15/15, 32 lát/ca, mask WT = OT `{1,2,3,4}`, ảnh 128×128, loss, seeds và metric. Chọn checkpoint/ngưỡng trên validation; chỉ mở test khi cấu hình cả ba đã khóa.
-
-### M1 — baseline CNN nông
-
-```mermaid
-flowchart LR
-    I["FLAIR 3×128×128"] --> C1["Conv 3→16 + ReLU"]
-    C1 --> C2["Conv 16→16 + ReLU"]
-    C2 --> C3["Conv 16→1"]
-    C3 --> O["WT logits 1×128×128"]
-```
-
-### M2 — U-Net/ResNet-18 từ đầu
-
-```mermaid
-flowchart LR
-    I["FLAIR 3×128×128"] --> E["ResNet-18 encoder: random"]
-    E --> F["Đặc trưng nhiều mức + skip"]
-    F --> D["U-Net decoder: random"]
-    D --> O["WT logits 1×128×128"]
-```
-
-### M3 — cùng U-Net/ResNet-18 với transfer learning
-
-```mermaid
-flowchart LR
-    I["FLAIR 3×128×128"] --> E["ResNet-18 encoder: ImageNet"]
-    E --> F["Cùng mức đặc trưng + skip như M2"]
-    F --> D["Cùng U-Net decoder/head như M2"]
-    D --> O["WT logits 1×128×128"]
-```
-
-## Cấu trúc repository mục tiêu
+## Cấu trúc đã tạo
 
 ```text
 Project_midterm/
-├── AGENTS.md                      # Quy tắc Windows, notebook + PowerShell, benchmark
-├── README.md                      # Tổng quan và hướng dẫn dùng
-├── Project_structure.md           # Thiết kế kỹ thuật, sơ đồ, giao thức
-├── Detail_jobs.md                 # Phân công và tiêu chí bàn giao
-├── pyproject.toml                 # Cài package src/ ở chế độ editable
-├── requirements.txt               # Package phụ trợ; PyTorch CUDA theo selector chính thức
-├── .gitignore                     # .venv, dữ liệu, cache, checkpoint
-├── .gitattributes                 # Chuẩn hóa line endings cho Windows/Git
-├── .venv/                         # Tạo bằng Python Windows; không commit
-├── configs/
-│   ├── benchmark.yaml             # Quy tắc chung: data, split, 32 lát, seeds, metric
-│   ├── m1.yaml
-│   ├── m2.yaml
-│   └── m3.yaml
-├── notebooks/
-│   ├── 00_prepare.ipynb           # Audit, chọn bệnh nhân, tạo split/cache
-│   └── 90_compare.ipynb           # Bảng benchmark, hình, phân tích lỗi
+├── AGENTS.md, README.md, Project_structure.md, Detail_jobs.md
+├── requirements.txt              # thư viện bên ngoài; không có package mã nội bộ
+├── .venv/                       # Python Windows; không commit
 ├── M1/
-│   ├── M1.ipynb                   # Notebook chạy chính của thành viên M1
-│   └── README.md                  # Giải thích mô hình và kết quả M1
+│   ├── M1.ipynb                 # code và Markdown đầy đủ, luồng chính
+│   ├── M1.py                    # cùng quy trình, chạy qua PowerShell
+│   └── README.md
 ├── M2/
-│   ├── M2.ipynb                   # Notebook chạy chính của thành viên M2
-│   └── README.md                  # Giải thích mô hình và kết quả M2
+│   ├── M2.ipynb
+│   ├── M2.py
+│   └── README.md
 ├── M3/
-│   ├── M3.ipynb                   # Notebook chạy chính của thành viên M3
-│   └── README.md                  # Giải thích mô hình và kết quả M3
-├── scripts/
-│   ├── download_dataset.py        # Đã có: tải 100 cặp FLAIR–OT qua HTTPS
-│   ├── verify_dataset.py          # Đã có: kiểm file/size/header/split/hash
-│   ├── prepare_data.py            # PowerShell option: chuẩn bị dataset
-│   ├── train.py                   # PowerShell option: --model m1|m2|m3 --seed ...
-│   ├── evaluate.py                # PowerShell option: đánh giá checkpoint đã khóa
-│   ├── compare.py                 # PowerShell option: tổng hợp kết quả
-│   └── profile.py                 # Đo thời gian và peak VRAM
-├── src/brats_benchmark/
-│   ├── __init__.py
-│   ├── config.py                   # Đọc config và project root
-│   ├── pipeline.py                 # API chung cho notebook và script
-│   ├── data/                       # MHA reader, audit, split, preprocess, Dataset
-│   ├── models/                     # M1; factory U-Net dùng chung M2/M3
-│   ├── training/                   # Loss, trainer, checkpoint, AMP
-│   └── evaluation/                 # Metric theo bệnh nhân, bootstrap, plots
-├── tests/                          # Split/leakage, mask/shape, metric, entrypoint
+│   ├── M3.ipynb
+│   ├── M3.py
+│   └── README.md
 ├── data/
-│   ├── README.md
-│   ├── metadata/brats2015.torrent # Cache metadata; không commit
-│   ├── raw/                       # Không commit
-│   ├── processed/                 # Không commit
-│   ├── source_manifest.json
-│   ├── splits_v1.csv
-│   ├── file_sha256.csv             # Sinh sau khi tải xong 201 file
-│   └── excluded_cases.csv
-├── runs/<m1|m2|m3>/<seed>/        # config, history, best.pt, threshold
-└── reports/
-    ├── figures/
-    ├── hardware_profile.md
-    ├── benchmark.csv
-    ├── per_patient.csv
-    ├── report.md
-    └── slides.pdf
+│   ├── source_manifest.json     # khóa 100 ca và SHA-1 nguồn
+│   ├── splits_v1.csv           # split cố định 70/15/15 theo case_id
+│   ├── file_sha256.csv         # checksum 201 file
+│   ├── raw/BRATS2015/          # 200 MRI + giấy phép; không commit
+│   └── processed/             # cache chung; không commit
+├── runs/                       # checkpoint, CSV, hình của mỗi Mx; không commit
+├── reports/                    # báo cáo nhóm
+└── slides/                     # tài liệu người dùng đang có
 ```
 
-Mã lõi ở `src/` để notebook và script không lặp logic. `M1/`, `M2/`, `M3/` là nơi thành viên trình bày thí nghiệm của mình; checkpoint và CSV đặt ở `runs/`/`reports/` theo format chung. `pyproject.toml` cho phép cài `src/brats_benchmark` dạng editable thay vì sửa `sys.path` trong notebook.
+**Không có `scripts/`, `src/`, notebook chung hoặc package nội bộ.** Mỗi notebook chứa trực tiếp toàn bộ mã của mức đó: kiểm dữ liệu → tiền xử lý → model → loss/metric → train/validation → checkpoint → test → hình. `Mx.py` tự chứa cùng quy trình; không import mã từ notebook hay folder khác. Các thư viện ngoài (`torch`, `torchvision`, `SimpleITK`, `numpy`, `matplotlib`) được cài trong `.venv` chung. Xem [AGENTS.md](AGENTS.md) và [chia việc](Detail_jobs.md).
 
-## Tải tập con BraTS 2015 bằng PowerShell Windows — đã kiểm tra
+## Dữ liệu và kiểm tra đã thực hiện
 
-Chạy trong **PowerShell Windows**; script tải trực tiếp qua HTTPS từ web seed Archive.org được liệt kê trong [torrent gốc của Academic Torrents](https://academictorrents.com/download/c4f39a0a8e46e8d2174b8a8a81b9887150f44d50.torrent). Không cần WSL, không cần torrent client, không cần package Python ngoài thư viện chuẩn và không cần `.venv` để tải:
+`data/raw/BRATS2015/training/{HGG,LGG}/<patient_id>/...` đã có **200 file `.mha` FLAIR/OT và 1 file giấy phép**. Ngày 28/09/2026, PowerShell Windows kiểm đủ **201/201 file**, đúng kích thước và **SHA-256 khớp `data/file_sha256.csv`**; vì vậy máy này **không cần tải lại**. `data/splits_v1.csv` có 80 HGG + 20 LGG, chia 70 train / 15 validation / 15 test theo `case_id = grade/patient_id`.
+
+Nguồn là [Academic Torrents BraTS 2015](https://academictorrents.com/details/c4f39a0a8e46e8d2174b8a8a81b9887150f44d50), tải các file đã chọn từ [web seed Archive.org](https://archive.org/metadata/BRATS2015). Bản sao HTTPS có 100 HGG và 54 LGG hoàn chỉnh; cohort 100 ca đã được khóa trong `data/source_manifest.json`. Không đưa MRI gốc lên Git.
+
+### Tải lại trên máy Windows khác nếu `data/raw/` trống
+
+Chạy **PowerShell Windows** từ root. Dòng `Set-Location` dưới đây là đường dẫn trên máy hiện tại; khi clone ở vị trí khác, thay bằng đường dẫn root của bản clone. Khối lệnh dùng đúng danh sách file và SHA-1 đã khóa; file hợp lệ được bỏ qua, file thiếu được tải bằng HTTPS vào đúng đường dẫn. `Invoke-WebRequest` là lệnh có sẵn trong PowerShell 5.1. Tôi đã thử tải lại một file giấy phép bị xóa tạm thời, sau đó xác minh 201/201 SHA-256 bằng chính khối lệnh này.
 
 ```powershell
 Set-Location 'D:\Desktop_informations\SGK năm 4\SGK kì 1 năm 4\DeepLearning - Ngân\Project\Project_midterm'
-py -3.12 .\scripts\download_dataset.py --workers 4
-py -3.12 .\scripts\verify_dataset.py --write-checksums
+$source = Get-Content .\data\source_manifest.json -Raw | ConvertFrom-Json
+$items = @($source.license_file)
+foreach ($case in $source.cases) { $items += $case.flair; $items += $case.mask }
+foreach ($item in $items) {
+    $target = Join-Path .\data\raw\BRATS2015 ($item.path.Replace('/', [IO.Path]::DirectorySeparatorChar))
+    if ((Test-Path -LiteralPath $target) -and
+        (Get-Item -LiteralPath $target).Length -eq [int64]$item.bytes -and
+        (Get-FileHash -LiteralPath $target -Algorithm SHA1).Hash.ToLowerInvariant() -eq $item.sha1) { continue }
+    New-Item -ItemType Directory -Force -Path (Split-Path $target) | Out-Null
+    $url = 'https://archive.org/download/BRATS2015/BRATS2015/' + $item.path
+    for ($attempt = 1; $attempt -le 4; $attempt++) {
+        try {
+            Invoke-WebRequest -UseBasicParsing -Uri $url -OutFile $target
+            if ((Get-Item -LiteralPath $target).Length -ne [int64]$item.bytes -or
+                (Get-FileHash -LiteralPath $target -Algorithm SHA1).Hash.ToLowerInvariant() -ne $item.sha1) {
+                throw "Sai kích thước hoặc SHA-1: $target"
+            }
+            break
+        } catch {
+            Remove-Item -LiteralPath $target -ErrorAction SilentlyContinue
+            if ($attempt -eq 4) { throw }
+            Start-Sleep -Seconds (2 * $attempt)
+        }
+    }
+}
+$checks = Import-Csv .\data\file_sha256.csv
+$bad = @($checks | Where-Object {
+    $path = Join-Path .\data\raw\BRATS2015 ($_.path.Replace('/', [IO.Path]::DirectorySeparatorChar))
+    -not (Test-Path -LiteralPath $path) -or
+    (Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash.ToLowerInvariant() -ne $_.sha256
+})
+if ($bad.Count -ne 0) { throw "$($bad.Count) file sai checksum" }
+"Đã kiểm tra $($checks.Count)/$($checks.Count) file."
 ```
 
-Lệnh chọn cố định **80 HGG + 20 LGG**, tải **200 file `.mha` FLAIR/OT + 1 file giấy phép**, tổng **0,870 GiB** theo metadata, vào `data/raw/BRATS2015/training/{HGG,LGG}/<patient_id>/...`. Torrent gốc có nhiều ca hơn, nhưng [inventory Archive.org](https://archive.org/metadata/BRATS2015) chỉ có **100 ca HGG và 54 ca LGG hoàn chỉnh** (có cả FLAIR và OT). Script đối chiếu path/kích thước với torrent đã xác minh trước khi chọn, rồi kiểm SHA-1 của từng file khi tải và khi chạy lại; danh sách 100 ca được khóa trong `data/source_manifest.json` để lần chạy sau và máy khác không đổi tập con khi mirror thay đổi. `data/splits_v1.csv` dùng **`case_id = grade/patient_id`**, tránh trùng ID giữa hai nhóm. Ảnh gốc nằm trong `.gitignore`; manifest và bảng checksum nhỏ được đưa lên Git.
+## Cài môi trường chung trên Windows
 
-**Kiểm tra đã thực hiện:** PowerShell Windows/Python 3.12 tải đủ 200 MRI + giấy phép vào đúng thư mục. Lần chạy lại báo **201/201 `already_present`** sau khi đối chiếu kích thước và SHA-1 gốc. `verify_dataset.py --write-checksums` báo **201/201 hợp lệ, 0 thiếu, 0 sai**, xác nhận split 70/15/15 và tạo `data/file_sha256.csv`. Nếu mạng ngắt ở máy khác, chạy lại cùng lệnh sẽ kiểm tra file đã có và tải phần còn thiếu.
-
-[Academic Torrents hướng dẫn tải torrent](https://academictorrents.com/docs/getting-started.html). Đường HTTPS đã thử trực tiếp là `https://archive.org/download/BRATS2015/BRATS2015/training/...`; downloader tự lấy tên file chuẩn từ metadata, không cần tự viết 200 URL.
-
-## Cài và chạy sau khi các file mục tiêu được triển khai
-
-Mở **PowerShell Windows** tại project root. `py -3.12` hiện có trên máy; tạo `.venv` bằng chính Python Windows. Có thể dùng trực tiếp interpreter của `.venv` mà không cần `Activate.ps1`:
+Máy hiện có `.venv` tạo bằng **Python Windows 3.12**. Nếu clone sang máy khác, chạy trong PowerShell tại root:
 
 ```powershell
 py -3.12 -m venv .venv
 $ProjectPython = '.\.venv\Scripts\python.exe'
 & $ProjectPython -m pip install --upgrade pip
-# Cài torch/torchvision CUDA theo Windows + Pip + CUDA ở https://docs.pytorch.org/get-started/locally/
+# Cài torch + torchvision bản CUDA phù hợp theo https://pytorch.org/get-started/locally/
 & $ProjectPython -m pip install -r requirements.txt
-& $ProjectPython -m pip install -e .
 & $ProjectPython -m ipykernel install --user --name brats2015-midterm --display-name 'BraTS 2015 (.venv)'
 & $ProjectPython -c "import torch; print(torch.cuda.is_available())"
 ```
 
-Bước cài PyTorch cần lấy **lệnh đúng cho máy tại thời điểm cài** từ [PyTorch Start Locally](https://docs.pytorch.org/get-started/locally/). [Python `venv`](https://docs.python.org/3.12/library/venv.html) cho phép gọi `Scripts\python.exe` trực tiếp; [IPython](https://ipython.readthedocs.io/en/stable/install/index.html) hướng dẫn đăng ký kernel. Trong VS Code/Jupyter, chọn kernel **BraTS 2015 (.venv)** hoặc interpreter `.venv\Scripts\python.exe`, rồi xác nhận `sys.executable` và `torch.cuda.is_available()` trong notebook. Xem [hướng dẫn chọn kernel của VS Code](https://code.visualstudio.com/docs/datascience/jupyter-kernel-management).
+Lấy lệnh cài PyTorch CUDA hiện hành từ [PyTorch Start Locally](https://pytorch.org/get-started/locally/); chọn **Windows / Pip / CUDA** trước bước `requirements.txt`. Trong VS Code/Jupyter, chọn kernel **BraTS 2015 (.venv)** và kiểm `sys.executable` là `.venv\Scripts\python.exe`. Không tạo hoặc dùng môi trường WSL.
 
-Khi script đã được triển khai, PowerShell gọi cùng pipeline như notebook:
+**Môi trường đã thử trên máy này:** Python 3.12.10, torch 2.11.0+cu128, torchvision 0.26.0+cu128, SimpleITK 2.5.6, matplotlib 3.11.2, ipykernel 7.3.0; `torch.cuda.is_available()` trả `True`. `pip check` không báo xung đột. Trọng số ImageNet của M3 đã tải được qua `torchvision`.
+
+## Chạy mỗi Mx theo hai cách
+
+**Cách chính — notebook:** mở `M1/M1.ipynb`, `M2/M2.ipynb`, `M3/M3.ipynb` trên Windows, chọn kernel `.venv`, rồi **Restart Kernel + Run All**. Cell cuối mặc định `ACTION = "smoke"`, `SEED = 42`: 1 epoch với 2 ca train/1 ca validation để kiểm quy trình. Đổi `ACTION = "train"` và lần lượt `SEED = 42, 123, 2026` để train đầy đủ. Chỉ chọn `ACTION = "test"` sau khi cả ba Mx có checkpoint full cho cùng seed.
+
+**Cách hai — file `.py` trong chính folder Mx:** từ PowerShell Windows ở root:
 
 ```powershell
 $ProjectPython = '.\.venv\Scripts\python.exe'
-& $ProjectPython .\scripts\prepare_data.py --config .\configs\benchmark.yaml
-& $ProjectPython .\scripts\profile.py --model m2
-& $ProjectPython .\scripts\train.py --model m1 --seed 42
-& $ProjectPython .\scripts\train.py --model m2 --seed 42
-& $ProjectPython .\scripts\train.py --model m3 --seed 42
-# Sau khi hoàn thành mọi seed, chọn xong checkpoint/ngưỡng trên validation:
-& $ProjectPython .\scripts\evaluate.py --split test
-& $ProjectPython .\scripts\compare.py
+& $ProjectPython .\M1\M1.py --smoke
+& $ProjectPython .\M2\M2.py --smoke
+& $ProjectPython .\M3\M3.py --smoke
+# Huấn luyện cuối (lặp các seed 42, 123, 2026):
+& $ProjectPython .\M1\M1.py --train --seed 42
+& $ProjectPython .\M2\M2.py --train --seed 42
+& $ProjectPython .\M3\M3.py --train --seed 42
+# Chỉ sau khi cả ba model đã khóa checkpoint cho seed đó:
+& $ProjectPython .\M1\M1.py --test --seed 42
 ```
 
-Các ví dụ PowerShell trên là **giao diện cần hiện thực**, chưa chạy được trong trạng thái repo hiện tại. Notebook là luồng chính; script là cách tái lập/automation. Cả hai phải tạo cùng định dạng artifact và cùng kết quả khi đọc một checkpoint đã khóa.
+`--prepare` ở bất kỳ Mx nào kiểm file và tạo cache cho 100 ca trước khi train. Artifacts nằm ở `runs/smoke/<mx>/<seed>/` hoặc `runs/<mx>/<seed>/`: `best.pt`, `history.csv`, `metrics_val.csv`, `preview.png`, `config.json`; test tạo `metrics_test.csv`. Các Mx dùng cùng `data/splits_v1.csv` và cache `data/processed/flair_wt_v1/`.
 
-## Phần cứng và thời gian dự kiến
+## Kiến trúc và benchmark
 
-Máy đã thấy **i7-12800H, RTX A4500 Laptop 16 GB VRAM, khoảng 23 GiB RAM**; PowerShell 5.1 và Python Windows 3.12 có sẵn. Python Windows hiện **chưa cài PyTorch, ipykernel, JupyterLab, SimpleITK**, nên dưới đây chỉ là ước lượng cho 100 ca × 32 lát, 128×128, tối đa 30 epoch, batch hiệu dụng 16:
+```mermaid
+flowchart LR
+    A["BraTS 2015: FLAIR + OT"] --> B["100 case_id; split 70/15/15"]
+    B --> C["32 lát/ca; 128×128; WT nhị phân"]
+    C --> D["M1: CNN 3 Conv"]
+    C --> E["M2: U-Net/ResNet-18 random"]
+    C --> F["M3: cùng U-Net/ResNet-18 ImageNet"]
+    D --> G["Validation: checkpoint + threshold"]
+    E --> G
+    F --> G
+    G --> H["Test sau khi cả ba khóa cấu hình; Dice/IoU theo bệnh nhân"]
+```
 
-| Mức | Train 1 seed | Train 3 seed | Inference 32 lát/ca, model GPU |
-|---|---:|---:|---:|
-| M1 | 2–10 phút | 6–30 phút | dưới 0,5 giây |
-| M2 | 15–50 phút | 45–150 phút | khoảng 0,2–2 giây |
-| M3 | 12–45 phút | 36–135 phút | khoảng 0,2–2 giây |
+M2/M3 có class model và decoder giống nhau, được viết đầy đủ trong **cả hai** notebook/file `.py`; khác ở khởi tạo encoder và lịch train M3. Cả ba dùng cùng loss `0.5 BCEWithLogits + 0.5 soft Dice`, ImageNet normalization, batch 16, 30 epoch tối đa và seed cố định. Chỉ dùng validation để chọn checkpoint/ngưỡng. Xem [thiết kế chi tiết](Project_structure.md).
 
-**Tổng ba mô hình × ba seed:** khoảng **1,5–5,5 giờ**, chưa tính tải, audit và tiền xử lý. Đây là dự toán từ cấu hình bài toán, **chưa đo bằng PyTorch Windows**. Sau khi có package/data, dùng `scripts/profile.py` trên Windows để ghi tốc độ thực, peak VRAM, thời gian I/O vào `reports/hardware_profile.md`; cập nhật lịch chạy theo số đo đó.
-
-## Nguồn đọc nhanh
-
-- [BraTS 2015 dataset](https://academictorrents.com/details/c4f39a0a8e46e8d2174b8a8a81b9887150f44d50) và [bài báo BRATS](https://pmc.ncbi.nlm.nih.gov/articles/PMC4833122/).
-- [Fully Convolutional Networks](https://openaccess.thecvf.com/content_cvpr_2015/html/Long_Fully_Convolutional_Networks_2015_CVPR_paper.html), [U-Net](https://arxiv.org/abs/1505.04597), [ResNet](https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html).
-- [PyTorch transfer learning](https://docs.pytorch.org/tutorials/beginner/transfer_learning_tutorial.html), [Segmentation Models PyTorch](https://github.com/qubvel-org/segmentation_models.pytorch/blob/main/docs/quickstart.rst). Nguồn chuyên sâu theo từng thành viên nằm trong `Detail_jobs.md`.
+**Phần cứng:** i7-12800H, RTX A4500 Laptop 16 GiB VRAM, khoảng 23 GiB RAM. Dự toán trước đây cho 3 model × 3 seed khoảng 1,5–5,5 giờ GPU, **chưa phải phép đo thực**. Smoke mặc định chỉ kiểm khả năng chạy; không dùng điểm smoke làm kết luận. Kết quả cuối và thời gian thật sẽ được ghi sau khi train đủ.

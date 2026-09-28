@@ -1,36 +1,30 @@
-# Quy tắc làm việc cho agent và thành viên dự án
+# Quy tắc bắt buộc cho mọi agent và thành viên — Project_midterm
 
-Phạm vi: toàn bộ repository `Project_midterm/`. Đọc `README.md`, `Project_structure.md` và `Detail_jobs.md` trước khi sửa code. Yêu cầu của người dùng trong hội thoại hiện tại được ưu tiên nếu khác tài liệu này.
+Phạm vi: toàn bộ repository. Đọc `README.md`, `Project_structure.md`, `Detail_jobs.md` và README trong Mx liên quan trước khi sửa. Yêu cầu mới nhất của người dùng trong hội thoại được ưu tiên. Trạng thái và kết quả phải phản ánh những gì đã chạy thật.
 
-## 1. Hai cách chạy bắt buộc
+## 1. Vị trí mã và hai cách chạy
 
-1. **Notebook `.ipynb` là luồng chạy chính và cách trình bày kết quả.** Mỗi mức có đúng một notebook chính: `M1/M1.ipynb`, `M2/M2.ipynb`, `M3/M3.ipynb`. Notebook chung `notebooks/00_prepare.ipynb` chuẩn bị dữ liệu; `notebooks/90_compare.ipynb` tổng hợp benchmark. Mỗi notebook phải chạy từ đầu tới cuối bằng **Restart Kernel + Run All** trong Windows với kernel của `.venv`.
-2. **PowerShell + file Python là luồng chạy thứ hai.** Các entry point `scripts/prepare_data.py`, `scripts/train.py`, `scripts/evaluate.py`, `scripts/compare.py`, `scripts/profile.py` phải chạy bằng `& .\.venv\Scripts\python.exe .\scripts\<file>.py ...` từ thư mục gốc dự án. Không dùng cú pháp shell Linux trong tài liệu hướng dẫn chạy.
-3. Hai luồng trên phải gọi **cùng hàm trong `src/brats_benchmark/`**, dùng cùng file config, split và phép tính metric. Notebook giữ code điều phối, Markdown, biểu đồ, phân tích; không sao chép nguyên vòng train hoặc logic tiền xử lý từ Python source vào notebook.
+- **Mọi mã Python thực hiện bài toán nằm trong `M1/`, `M2/`, `M3/`.** Mỗi thư mục có đúng một notebook chính `Mx.ipynb` và một file `Mx.py`. Notebook là bản trình bày và chạy **chính**, phải chứa trực tiếp đầy đủ mã đọc dữ liệu, tiền xử lý, model, loss, train, validation, test và hình minh họa, kèm Markdown giải thích. File `.py` tự chứa cùng quy trình để chạy bằng PowerShell. Được import thư viện chuẩn và package cài qua pip; **không import, `%run`, `exec`, `%load` hay gọi file Python của project hoặc notebook khác**. Không tạo lại `scripts/`, `src/`, notebook chung, package nội bộ hay file Python ở root/data/reports.
+- Notebook và `.py` của cùng Mx phải có cùng công thức, tham số và đường dẫn artifact. Khi sửa một bên, sửa bên còn lại trong cùng thay đổi; kiểm cả **Restart Kernel + Run All** và lệnh PowerShell. Việc lặp mã giữa Mx là lựa chọn có chủ ý để từng thành viên đọc trọn quy trình; mọi thay đổi hợp đồng benchmark phải được đồng bộ ở cả sáu file.
+- Lệnh PowerShell từ root: `& .\.venv\Scripts\python.exe .\M1\M1.py --smoke` (tương tự M2/M3). `--train --seed 42|123|2026` chạy một seed đầy đủ; `--test --seed ...` chỉ sau khi cả ba model đã có checkpoint cho seed đó. Trong notebook, cell cuối chọn `ACTION = "smoke"|"prepare"|"train"|"test"` và `SEED`; mặc định smoke. Không mô tả smoke như kết quả benchmark.
+- `data/` chỉ chứa dataset, split, checksum và cache; `runs/` chứa checkpoint/kết quả; `reports/` chứa báo cáo/hình. README và `Detail_jobs.md` là tài liệu. `requirements.txt` là danh sách thư viện. `slides/` do người dùng cung cấp, không xóa hoặc sửa khi không được yêu cầu.
 
-## 2. Môi trường Windows
+## 2. Windows và môi trường chung
 
-- Tạo virtual environment bằng **Python Windows** ở `Project_midterm/.venv/` (`py -3.12 -m venv .venv`). Không tạo hoặc dùng `.venv` bằng WSL/Linux. Không dùng đường dẫn `/mnt/...` hay `/home/...` trong code, config và lệnh chạy của dự án.
-- Chọn interpreter/kernel trỏ tới `Project_midterm\.venv\Scripts\python.exe`. Kiểm tra `sys.executable` trong notebook và `torch.cuda.is_available()` ở cả notebook lẫn PowerShell. Nếu CUDA chưa sẵn sàng thì ghi rõ nguyên nhân, không ngầm chạy benchmark cuối trên CPU.
-- Dùng `pathlib.Path` và đường dẫn tương đối từ project root. Không hard-code tên người dùng, ổ đĩa hoặc đường dẫn dữ liệu của một thành viên.
-- `.venv/`, dữ liệu MRI, cache, checkpoint lớn và output notebook quá lớn phải được bỏ qua trong Git. Không lưu thông tin cá nhân/bí mật vào `.env` hoặc notebook.
-- Chỉ ghi lệnh cài PyTorch CUDA theo [bộ chọn chính thức cho Windows](https://docs.pytorch.org/get-started/locally/) sau khi xác nhận phiên bản phù hợp; tránh chép một URL wheel có thể lỗi thời vào tài liệu.
+- Dùng đúng `.venv` **Windows** ở root, tạo bằng `py -3.12 -m venv .venv` nếu thiếu. Không tạo `.venv` bằng WSL/Linux, không dùng kernel WSL hoặc đường dẫn `/mnt/...`/`/home/...` trong code, config, notebook và hướng dẫn chạy.
+- Chạy notebook trên Windows với kernel có `sys.executable` trỏ tới `Project_midterm\.venv\Scripts\python.exe`; file `.py` dùng chính interpreter đó từ PowerShell. Kiểm `torch.cuda.is_available()`; benchmark cuối dùng GPU CUDA. Nếu CUDA thiếu, ghi lỗi rõ và sửa môi trường trước khi train cuối.
+- Dùng `pathlib.Path` tìm root từ current working directory hoặc `__file__`, rồi đường dẫn tương đối tới `data/`, `runs/`, `reports/`. Không hard-code ổ đĩa/người dùng trong mã. Lệnh README có thể dùng đường dẫn D: cụ thể của máy chủ để giúp mở thư mục.
+- Không commit `.venv/`, MRI gốc, cache, checkpoint, dữ liệu bệnh nhân, log lớn hoặc output notebook. Không thêm bí mật vào notebook/`.env`.
 
-## 3. Hợp đồng benchmark chung
+## 3. Hợp đồng benchmark không được đổi âm thầm
 
-- Chỉ dùng BraTS 2015 đã kiểm kê. Tập con cố định 100 bệnh nhân có FLAIR và OT: 80 HGG, 20 LGG; split theo bệnh nhân 70/15/15. Mọi mô hình đọc cùng `data/splits_v1.csv` và cùng 32 lát/ca, kích thước 128×128.
-- Mask WT nhị phân: các giá trị OT `{1,2,3,4}` thành 1; 0 thành 0. Cùng chuẩn hóa ảnh, augmentation train, loss, batch hiệu dụng, định nghĩa metric và danh sách seed cho cả M1/M2/M3.
-- M1 là CNN nông; M2 và M3 dùng **cùng factory U-Net/ResNet-18**. M2 khởi tạo encoder ngẫu nhiên; M3 dùng ImageNet weights rồi fine-tune. Không thay decoder hoặc input của riêng M3 mà không ghi thành thí nghiệm khác.
-- Chọn checkpoint, hyperparameter và ngưỡng trên validation. Chỉ chạy test sau khi ba mô hình đã khóa cấu hình. Dice/IoU tính theo **bệnh nhân**, không gộp mọi lát thành một mẫu độc lập.
-- Pilot/smoke test ghi vào `runs/smoke/`; không trộn với kết quả benchmark. Không bịa số Dice, thời gian hoặc ảnh demo.
+- BraTS 2015, đúng 100 `case_id = grade/patient_id` trong `data/splits_v1.csv`: 80 HGG/20 LGG, 70 train/15 val/15 test. Mọi Mx đọc đúng 32 lát/ca từ 20–80% độ sâu ảnh, resize 128×128, FLAIR đơn modality, WT = OT thuộc `{1,2,3,4}`. Không dùng mask để chọn lát.
+- Cùng chuẩn hóa FLAIR theo median/IQR voxel khác 0, clip `[-5,5]`, lặp 3 kênh và ImageNet mean/std; cùng augmentation train, batch, loss `0.5 BCEWithLogits + 0.5 soft Dice`, seed `42,123,2026`, ngưỡng validation và metric patient-level. `data/file_sha256.csv` xác nhận file raw; cache chung ở `data/processed/flair_wt_v1/`.
+- M1: CNN nông từ đầu. M2 và M3: **cùng class U-Net/ResNet-18 và decoder**, mã hiện trực tiếp trong cả hai notebook và `.py`; M2 dùng encoder random, M3 dùng ImageNet weights, freeze encoder 5 epoch rồi mở `layer4` tối đa 25 epoch. Mọi khác biệt khác phải ghi thành thí nghiệm riêng.
+- Chọn threshold/checkpoint/hyperparameter bằng validation. Chỉ mở test sau khi đủ ba model có checkpoint đã khóa; tính Dice/IoU theo **bệnh nhân** từ 32 lát, không xem lát như mẫu độc lập. Không ghi số đo chưa chạy.
 
-## 4. Chia việc và tích hợp
+## 4. Cách sửa và bàn giao
 
-- Một thành viên chịu trách nhiệm một mức: M1, M2 hoặc M3. Phân bổ chi tiết và mốc bàn giao ở `Detail_jobs.md`; các module chung có một người sở hữu rõ ràng và được hai người còn lại review.
-- Trước khi code Mx, thống nhất chữ ký hàm cho `prepare_data`, `train_model`, `evaluate_model`, config và định dạng `runs/<model>/<seed>/`. Notebook và script phải dùng chính các hàm này.
-- Mọi thay đổi về split, nhãn, metric hoặc preprocessing phải cập nhật `configs/benchmark.yaml`, `README.md`, `Project_structure.md` và thông báo cả nhóm trước khi chạy lại benchmark.
-- Khi bàn giao: chạy kiểm tra split/metric, smoke notebook từ clean kernel, smoke PowerShell script tương ứng; ghi lệnh đã chạy, kết quả và hạn chế. Không đánh dấu hoàn thành nếu chỉ một trong hai cách chạy hoạt động.
-
-## 5. Tài liệu tham chiếu
-
-- [Python `venv` trên Windows](https://docs.python.org/3.12/library/venv.html), [PyTorch cài trên Windows](https://docs.pytorch.org/get-started/locally/), [IPython kernel](https://ipython.readthedocs.io/en/stable/install/index.html), [VS Code chọn kernel Jupyter](https://code.visualstudio.com/docs/datascience/jupyter-kernel-management).
+- Mỗi thành viên sở hữu một Mx theo `Detail_jobs.md`. Không thêm API ẩn hay module dùng chung. Nếu thay quy tắc dữ liệu/metric, cập nhật cả ba notebook, ba `.py`, `README.md`, `Project_structure.md`, `Detail_jobs.md` và báo nhóm trước khi chạy lại kết quả.
+- Mỗi Mx phải chạy smoke trên **cả notebook và PowerShell**, sau đó full train/validation cho 3 seed. Ghi phiên bản package, thời gian, peak VRAM, checkpoint, CSV theo ca và hình thật. Test một lần sau khi khóa cấu hình.
+- Khi kiểm tra cài đặt, dùng tài liệu [PyTorch Windows](https://docs.pytorch.org/get-started/locally/), [Python venv](https://docs.python.org/3.12/library/venv.html), [Jupyter kernel](https://ipython.readthedocs.io/en/stable/install/index.html). Chọn wheel CUDA phù hợp máy từ nguồn chính thức; không tự tạo môi trường Linux.

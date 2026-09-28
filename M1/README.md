@@ -1,7 +1,10 @@
 # M1 — CNN nông
 
-**Chủ sở hữu:** Thành viên 1. Notebook chính sẽ là `M1.ipynb` trong thư mục này; hiện chưa có code huấn luyện.
+**Owner:** thành viên 1. [M1.ipynb](M1.ipynb) là bản đọc/trình bày/chạy chính; [M1.py](M1.py) là cách chạy PowerShell. Cả hai tự chứa kiểm dữ liệu, 32 lát FLAIR/WT, chuẩn hóa/cache, CNN 3 Conv, loss/metric patient-level, train/validation/test và ảnh preview. Không import mã project khác.
 
-Đầu vào FLAIR `3×128×128` → Conv 3×3 `3→16` → Conv 3×3 `16→16` → Conv 3×3 `16→1` → logits WT `1×128×128`. Huấn luyện từ đầu trên split chung. Mã mô hình thuộc `src/brats_benchmark/models/`; notebook gọi API chung, vẽ đường học và phân tích mask.
+```powershell
+& .\.venv\Scripts\python.exe .\M1\M1.py --smoke
+& .\.venv\Scripts\python.exe .\M1\M1.py --train --seed 42
+```
 
-Checklist, file bàn giao và tiêu chí nghiệm thu: [Detail_jobs.md](../Detail_jobs.md#thành-viên-1--m1-và-dữ-liệu-chung). Nguồn đọc: [Fully Convolutional Networks for Semantic Segmentation](https://openaccess.thecvf.com/content_cvpr_2015/html/Long_Fully_Convolutional_Networks_2015_CVPR_paper.html).
+Chạy từ **root trong Windows PowerShell** với `.venv` chung; notebook dùng kernel `BraTS 2015 (.venv)`, cell cuối mặc định smoke. Lặp `--train` cho seed 123 và 2026; `--test` chỉ sau khi cả M1/M2/M3 có checkpoint full. Artifacts: `runs/smoke/m1/42/` hoặc `runs/m1/<seed>/`. Đọc [phân công và nghiệm thu](../Detail_jobs.md#3-thành-viên-1--m1-baseline-đơn-giản) và [FCN paper](https://openaccess.thecvf.com/content_cvpr_2015/html/Long_Fully_Convolutional_Networks_2015_CVPR_paper.html).

@@ -1,14 +1,8 @@
-# Install PyTorch and torchvision for Windows/CUDA first using the official selector:
-# https://docs.pytorch.org/get-started/locally/
-# Pin exact versions in requirements-lock.txt after the Windows environment is verified.
-ipykernel>=6.29,<7
+# Install CUDA-enabled torch and torchvision for Windows first using:
+# https://pytorch.org/get-started/locally/
+# All M1/M2/M3 code is self-contained; these are external libraries only.
+numpy>=2.0,<3
+SimpleITK>=2.4,<3
+matplotlib>=3.9,<4
+ipykernel>=6.29,<8
 jupyterlab>=4,<5
-numpy>=1.26,<3
-pandas>=2.2,<3
-PyYAML>=6,<7
-SimpleITK>=2.3,<3
-segmentation-models-pytorch>=0.3,<1
-matplotlib>=3.8,<4
-scikit-learn>=1.4,<2
-tqdm>=4.66,<5
-pytest>=8,<10

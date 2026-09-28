@@ -1,7 +1,0 @@
-model: m1
-architecture: shallow_fcn
-input_channels: 3
-output_channels: 1
-hidden_channels: [16, 16]
-kernel_size: 3
-learning_rate: 0.001
