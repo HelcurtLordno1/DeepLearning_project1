@@ -1,14 +1,14 @@
 # BraTS 2015 Light Benchmark — M1 / M2 / M3
 
-**Bài toán:** phân đoạn *whole tumor* (WT) nhị phân từ lát MRI FLAIR 2D. M1 là CNN nông; M2 là U-Net với encoder ResNet-18 khởi tạo ngẫu nhiên; M3 dùng đúng kiến trúc M2 với encoder ImageNet và fine-tune. Đây là benchmark nội bộ trên **cùng 100 ca BraTS 2015**, không phải điểm chính thức của challenge.
+**Bài toán:** phân đoạn *whole tumor* (WT) nhị phân từ lát MRI FLAIR 2D. M1 là CNN encoder–decoder nhỏ tự xây; M2 được đặc tả là U-Net sâu với **toàn bộ encoder/decoder tự viết từ các lớp PyTorch cơ bản và học từ đầu**; M3 dùng encoder pretrained để transfer learning. Đây là benchmark nội bộ trên **cùng 100 ca BraTS 2015**, không phải điểm chính thức của challenge. Vì M2/M3 được phép khác kiến trúc, không quy riêng chênh lệch điểm cho pretrained weights.
 
-**Trạng thái kiểm tra:** 201/201 file raw đúng SHA-256; cache đã tạo đủ 100 ca; cả ba `Mx.py --smoke` và ba notebook chạy từ đầu tới cuối trên **Windows `.venv` + CUDA**. Chưa chạy full 3 seed/test, nên chưa có điểm benchmark cuối.
+**Trạng thái kiểm tra:** 201/201 file raw đúng SHA-256; cache đã tạo đủ 100 ca. Cả ba Mx đã có full train/validation/test seed 42 trên Windows `.venv`/CUDA: test mean Dice theo 15 bệnh nhân lần lượt **M1 0.7997**, **M2 0.8074**, **M3 0.8120**. Artifact thật nằm ở `runs/m1/42/`, `runs/m2/42/`, `runs/m3/42/`; bản notebook cục bộ của M1/M2 có output đã lưu, M3 notebook hiện chưa lưu output. Output notebook không đưa lên Git theo `AGENTS.md`. Seed 123/2026 chưa có kết quả. Xem [báo cáo benchmark](Benchmark_evaluate.md) để đọc phân tích và giới hạn so sánh.
 
 ## Cấu trúc đã tạo
 
 ```text
 Project_midterm/
-├── AGENTS.md, README.md, Project_structure.md, Detail_jobs.md
+├── AGENTS.md, README.md, Project_structure.md, Detail_jobs.md, Benchmark_evaluate.md
 ├── requirements.txt              # thư viện bên ngoài; không có package mã nội bộ
 ├── .venv/                       # Python Windows; không commit
 ├── M1/
@@ -34,7 +34,7 @@ Project_midterm/
 └── slides/                     # tài liệu người dùng đang có
 ```
 
-**Không có `scripts/`, `src/`, notebook chung hoặc package nội bộ.** Mỗi notebook chứa trực tiếp toàn bộ mã của mức đó: kiểm dữ liệu → tiền xử lý → model → loss/metric → train/validation → checkpoint → test → hình. `Mx.py` tự chứa cùng quy trình; không import mã từ notebook hay folder khác. Các thư viện ngoài (`torch`, `torchvision`, `SimpleITK`, `numpy`, `matplotlib`) được cài trong `.venv` chung. Xem [AGENTS.md](AGENTS.md) và [chia việc](Detail_jobs.md).
+**Không có `scripts/`, `src/`, notebook chung hoặc package nội bộ.** Mỗi notebook chứa trực tiếp toàn bộ mã của mức đó: kiểm dữ liệu → tiền xử lý → model → loss/metric → train/validation → checkpoint → test → hình. `Mx.py` tự chứa cùng quy trình; không import mã từ notebook hay folder khác. Các thư viện ngoài (`torch`, `torchvision`, `SimpleITK`, `numpy`, `matplotlib`, `torchinfo` để in bảng kiến trúc cả ba model) được cài trong `.venv` chung. Xem [AGENTS.md](AGENTS.md) và [chia việc](Detail_jobs.md).
 
 ## Dữ liệu và kiểm tra đã thực hiện
 
@@ -99,11 +99,11 @@ $ProjectPython = '.\.venv\Scripts\python.exe'
 
 Lấy lệnh cài PyTorch CUDA hiện hành từ [PyTorch Start Locally](https://pytorch.org/get-started/locally/); chọn **Windows / Pip / CUDA** trước bước `requirements.txt`. Trong VS Code/Jupyter, chọn kernel **BraTS 2015 (.venv)** và kiểm `sys.executable` là `.venv\Scripts\python.exe`. Không tạo hoặc dùng môi trường WSL.
 
-**Môi trường đã thử trên máy này:** Python 3.12.10, torch 2.11.0+cu128, torchvision 0.26.0+cu128, SimpleITK 2.5.6, matplotlib 3.11.2, ipykernel 7.3.0; `torch.cuda.is_available()` trả `True`. `pip check` không báo xung đột. Trọng số ImageNet của M3 đã tải được qua `torchvision`.
+**Môi trường đã thử trên máy này:** Python 3.12.10, torch 2.11.0+cu128, torchvision 0.26.0+cu128, SimpleITK 2.5.6, matplotlib 3.11.2, torchinfo 1.8.0, ipykernel 7.3.0; `torch.cuda.is_available()` trả `True`. Trọng số ImageNet của M3 đã tải được qua `torchvision`.
 
 ## Chạy mỗi Mx theo hai cách
 
-**Cách chính — notebook:** mở `M1/M1.ipynb`, `M2/M2.ipynb`, `M3/M3.ipynb` trên Windows, chọn kernel `.venv`, rồi **Restart Kernel + Run All**. Cell cuối mặc định `ACTION = "smoke"`, `SEED = 42`: 1 epoch với 2 ca train/1 ca validation để kiểm quy trình. Đổi `ACTION = "train"` và lần lượt `SEED = 42, 123, 2026` để train đầy đủ. Chỉ chọn `ACTION = "test"` sau khi cả ba Mx có checkpoint full cho cùng seed.
+**Cách chính — notebook:** mở `Mx/Mx.ipynb` trên Windows, chọn kernel `.venv`, rồi **Restart Kernel + Run All**. Ô đầu chỉ chọn `SEED = 42` (sau đó 123, 2026). Notebook dùng đủ 70 ca train/15 ca validation, in log từng epoch, điểm Dice/IoU/precision/recall/pixel accuracy, biểu đồ và ảnh; sau đó **đánh giá 15 ca test của chính Mx trong cùng lượt chạy**. Checkpoint/ngưỡng luôn chọn bằng validation, không chọn lại theo test. Bản cục bộ M1/M2 đã lưu output seed 42; M3 đã có artifact full ở `runs/` nhưng notebook chưa lưu output. Notebook trên Git không chứa output; Run All sẽ tạo lại khi cần trình bày. Mỗi Mx chạy độc lập, không chờ checkpoint của Mx khác.
 
 **Cách hai — file `.py` trong chính folder Mx:** từ PowerShell Windows ở root:
 
@@ -112,15 +112,15 @@ $ProjectPython = '.\.venv\Scripts\python.exe'
 & $ProjectPython .\M1\M1.py --smoke
 & $ProjectPython .\M2\M2.py --smoke
 & $ProjectPython .\M3\M3.py --smoke
-# Huấn luyện cuối (lặp các seed 42, 123, 2026):
+# Huấn luyện mỗi Mx (tự đánh giá test của chính model sau khi train):
 & $ProjectPython .\M1\M1.py --train --seed 42
 & $ProjectPython .\M2\M2.py --train --seed 42
 & $ProjectPython .\M3\M3.py --train --seed 42
-# Chỉ sau khi cả ba model đã khóa checkpoint cho seed đó:
+# Có thể đánh giá lại checkpoint riêng của M1 khi cần:
 & $ProjectPython .\M1\M1.py --test --seed 42
 ```
 
-`--prepare` ở bất kỳ Mx nào kiểm file và tạo cache cho 100 ca trước khi train. Artifacts nằm ở `runs/smoke/<mx>/<seed>/` hoặc `runs/<mx>/<seed>/`: `best.pt`, `history.csv`, `metrics_val.csv`, `preview.png`, `config.json`; test tạo `metrics_test.csv`. Các Mx dùng cùng `data/splits_v1.csv` và cache `data/processed/flair_wt_v1/`.
+`--prepare` tạo cache cho 100 ca trước khi train; các Mx không lặp kiểm SHA-256 trong mỗi lần Run All vì dữ liệu raw đã được xác minh trong bước chuẩn bị ở trên. Artifacts nằm ở `runs/smoke/<mx>/<seed>/` hoặc `runs/<mx>/<seed>/`: `best.pt`, `history.csv`, `metrics_val.csv`, `preview.png`, `config.json`; Cả ba có `learning_curve.png`, và train đầy đủ tạo `metrics_test.csv`. Các Mx dùng cùng `data/splits_v1.csv` và cache `data/processed/flair_wt_v1/`.
 
 ## Kiến trúc và benchmark
 
@@ -128,15 +128,15 @@ $ProjectPython = '.\.venv\Scripts\python.exe'
 flowchart LR
     A["BraTS 2015: FLAIR + OT"] --> B["100 case_id; split 70/15/15"]
     B --> C["32 lát/ca; 128×128; WT nhị phân"]
-    C --> D["M1: CNN 3 Conv"]
-    C --> E["M2: U-Net/ResNet-18 random"]
-    C --> F["M3: cùng U-Net/ResNet-18 ImageNet"]
+    C --> D["M1: CNN nhỏ tự xây, random init"]
+    C --> E["M2: U-Net sâu tự xây, random init"]
+    C --> F["M3: pretrained encoder + decoder"]
     D --> G["Validation: checkpoint + threshold"]
     E --> G
     F --> G
-    G --> H["Test sau khi cả ba khóa cấu hình; Dice/IoU theo bệnh nhân"]
+    G --> H["Mỗi Mx test độc lập sau khi khóa validation; tổng hợp CSV về sau"]
 ```
 
-M2/M3 có class model và decoder giống nhau, được viết đầy đủ trong **cả hai** notebook/file `.py`; khác ở khởi tạo encoder và lịch train M3. Cả ba dùng cùng loss `0.5 BCEWithLogits + 0.5 soft Dice`, ImageNet normalization, batch 16, 30 epoch tối đa và seed cố định. Chỉ dùng validation để chọn checkpoint/ngưỡng. Xem [thiết kế chi tiết](Project_structure.md).
+M1 dùng năm `ConvBlock` tự viết, hai MaxPool và hai bilinear upsample, không skip. M2 dùng `DoubleConv`/`DownBlock`/`UpBlock` tự viết với bốn skip; **không gọi built-in U-Net/ResNet, kể cả `weights=None`**. M3 được dùng pretrained encoder. Mỗi Mx huấn luyện một seed bằng **một loại AdamW**, có thể giảm learning rate trong cùng run và dừng sớm trên validation; không chạy vòng thử nhiều optimizer. Ba seed cố định để báo độ ổn định sau khi chốt cấu hình. Cả ba dùng chung loss `0.5 BCEWithLogits + 0.5 soft Dice`, ImageNet normalization, batch 16 và trần 30 epoch. Xem [thiết kế chi tiết](Project_structure.md) và [M1/README.md](M1/README.md).
 
-**Phần cứng:** i7-12800H, RTX A4500 Laptop 16 GiB VRAM, khoảng 23 GiB RAM. Dự toán trước đây cho 3 model × 3 seed khoảng 1,5–5,5 giờ GPU, **chưa phải phép đo thực**. Smoke mặc định chỉ kiểm khả năng chạy; không dùng điểm smoke làm kết luận. Kết quả cuối và thời gian thật sẽ được ghi sau khi train đủ.
+**Phần cứng:** i7-12800H, RTX A4500 Laptop 16 GiB VRAM, khoảng 23 GiB RAM. M1/M2/M3 seed 42 chạy lần lượt 26/24/15 epoch trong khoảng **138/251/87 giây**, peak GPU memory PyTorch **297.548.288/694.520.320/442.448.384 byte**. Điểm smoke không dùng làm kết quả; các seed còn lại vẫn cần chạy để đánh giá độ ổn định.

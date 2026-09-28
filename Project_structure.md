@@ -1,110 +1,117 @@
-# Thiết kế project — ba mô hình, một benchmark BraTS 2015
+# Thiết kế Project_midterm — phân đoạn whole tumor trên BraTS 2015
 
-## 1. Bài toán và nguồn dữ liệu
+## 1. Mục tiêu và dữ liệu cố định
 
-Nhóm phân đoạn nhị phân **whole tumor (WT)** trên MRI **FLAIR 2D**. Mask OT có nhãn `{0,1,2,3,4}`; WT = 1 nếu nhãn thuộc `{1,2,3,4}`, còn 0 là nền. Ba Mx giải đúng một bài toán trên đúng một cohort, không so sánh các dataset khác nhau. Đây là benchmark nội bộ trên tập con, không phải kết quả BraTS chính thức hay đánh giá lâm sàng.
+Ba mô hình dự đoán mask **whole tumor (WT)** từ một lát MRI **FLAIR 2D**. WT = 1 khi nhãn OT thuộc `{1,2,3,4}`. Đây là phép so sánh nội bộ trên 100 ca, không phải điểm chính thức của BraTS hoặc đánh giá lâm sàng. M1 là mạng nhỏ tự xây, M2 là U-Net sâu hơn **viết toàn bộ encoder/decoder từ các lớp cơ bản và học từ đầu**, M3 là mô hình transfer learning. Vì M2 và M3 có thể khác kiến trúc, chênh lệch điểm giữa hai mô hình không chỉ phản ánh pretrained weights.
 
-- [Academic Torrents BraTS 2015](https://academictorrents.com/details/c4f39a0a8e46e8d2174b8a8a81b9887150f44d50) là nguồn metadata/torrent. [Baidu AI Studio](https://aistudio.baidu.com/datasetdetail/26367) là nguồn tham khảo thay thế; không trộn file của hai nguồn nếu chưa đối chiếu checksum.
-- Gói torrent gốc khoảng 5,34 GB/1.812 file. Web seed HTTPS [Archive.org](https://archive.org/metadata/BRATS2015) chỉ có 100 HGG và 54 LGG training case hoàn chỉnh có FLAIR/OT. Cohort đã khóa chọn 80 HGG + 20 LGG, 200 file `.mha` khoảng **0,870 GiB**, cùng file giấy phép CC BY-NC-SA 3.0.
-- `data/source_manifest.json` ghi case/file/SHA-1 nguồn; `data/splits_v1.csv` ghi split; `data/file_sha256.csv` ghi SHA-256 201 file. **Ngày 28/09/2026 đã kiểm tra đủ 201/201 file trên máy này**, vì vậy không tải lại. Lệnh PowerShell tải trên máy khác và kiểm checksum nằm trong [README.md](README.md).
+| Thành phần | Hợp đồng chung cho M1/M2/M3 |
+|---|---|
+| Cohort | 100 `case_id = grade/patient_id`: 80 HGG, 20 LGG; đúng `data/splits_v1.csv`. |
+| Split | 70 train (56 HGG, 14 LGG), 15 validation (12, 3), 15 test (12, 3); chia theo **bệnh nhân**. |
+| File | FLAIR + OT cho từng ca; xác minh 201 file trong `data/file_sha256.csv`. Raw ở `data/raw/BRATS2015/`. |
+| Lát/ảnh | 32 lát/ca từ 20–80% độ sâu **ảnh**, không nhìn mask để chọn; resize 128×128, bilinear cho FLAIR và nearest cho mask. |
+| Chuẩn hóa | Theo thể tích FLAIR: median/IQR của voxel khác 0, clip `[-5,5]`, đưa `[0,1]`, nền giữ 0; lặp thành 3 kênh và dùng ImageNet mean/std cho cả ba Mx. |
+| Augmentation | Chỉ train: lật ngang ảnh và mask cùng lúc. |
+| Loss | `0.5 BCEWithLogits + 0.5 soft Dice`; model xuất logits, sigmoid chỉ trong loss/suy luận. |
+| Validation | Chọn checkpoint và threshold 0.30–0.70 theo mean Dice **theo bệnh nhân**; mỗi ca gộp đủ 32 lát. |
+| Test | Mỗi Mx đánh giá **độc lập** sau khi khóa checkpoint/ngưỡng của chính mình bằng validation; Dice/IoU/precision/recall theo bệnh nhân từ TP/FP/FN. M1 còn hiển thị pixel accuracy để trình bày, nhưng Dice/IoU là metric so sánh chính. |
+| Chạy cuối | CUDA, batch 16, tối đa 30 epoch, seed 42/123/2026. Ba seed đo độ ổn định của cấu hình đã chốt, không dùng để tìm optimizer. |
+| Smoke | 2 ca train, 1 ca validation, 1 epoch, batch 8; chỉ kiểm pipeline, không dùng làm kết quả benchmark. |
+
+Mask rỗng ở cả prediction và GT có Dice/IoU = 1; nếu chỉ một bên rỗng thì bằng 0. Cache chung `data/processed/flair_wt_v1/` chỉ chứa dữ liệu theo hợp đồng này. Mọi thay đổi dữ liệu, loss hoặc metric phải đồng bộ cả sáu file Mx và tài liệu trước khi chạy lại.
 
 ```mermaid
 flowchart TD
-    A["BraTS 2015: 100 case_id = grade/patient_id"] --> B["Kiểm 201 checksum + split 70/15/15"]
-    B --> C["FLAIR/OT 3D: kiểm shape, spacing, nhãn"]
-    C --> D["32 lát/ca từ 20–80% độ sâu ảnh"]
-    D --> E["128×128; FLAIR median/IQR; WT nhị phân"]
-    E --> F["Augment train; lặp 3 kênh; ImageNet mean/std"]
-    F --> M1["M1.ipynb hoặc M1.py"]
-    F --> M2["M2.ipynb hoặc M2.py"]
-    F --> M3["M3.ipynb hoặc M3.py"]
-    M1 --> V["Validation: checkpoint và threshold"]
+    D["201 file raw + splits_v1.csv"] --> P["32 lát/ca, 128×128, FLAIR/WT"]
+    P --> M1["M1: CNN nhỏ tự xây"]
+    P --> M2["M2: U-Net sâu tự xây, random init"]
+    P --> M3["M3: encoder pretrained + decoder"]
+    M1 --> V["Validation: checkpoint, threshold, dừng sớm"]
     M2 --> V
     M3 --> V
-    V --> T["Test một lần sau khi ba Mx khóa cấu hình"]
-    T --> R["Dice/IoU theo bệnh nhân, thời gian, VRAM, hình"]
+    V --> T["Mỗi Mx test độc lập với ngưỡng đã khóa"]
+    T --> R["CSV theo bệnh nhân + báo cáo"]
 ```
 
-## 2. Repository và quy tắc mã tự chứa
+## 2. Kiến trúc và phạm vi so sánh
+
+### M1 — CNN encoder–decoder nhỏ, học từ đầu
+
+M1 không dùng model dựng sẵn, pretrained weights hay skip connection. `ConvBlock(a,b)` gồm hai lần `Conv2d(3×3, padding=1, bias=False) → BatchNorm2d → ReLU`. MaxPool 2×2 giảm kích thước; bilinear interpolation tăng kích thước. Head 1×1 cho một logit WT trên mỗi pixel.
+
+```mermaid
+flowchart TD
+    I["FLAIR: B×3×128×128"] --> E1["ConvBlock 3→24: 128×128"]
+    E1 --> P1["MaxPool 2×2: 64×64"]
+    P1 --> E2["ConvBlock 24→48: 64×64"]
+    E2 --> P2["MaxPool 2×2: 32×32"]
+    P2 --> B["ConvBlock 48→96: 32×32"]
+    B --> U1["Bilinear up 2× + ConvBlock 96→48: 64×64"]
+    U1 --> U2["Bilinear up 2× + ConvBlock 48→24: 128×128"]
+    U2 --> H["Conv 1×1 24→1: WT logits 128×128"]
+```
+
+Đây là baseline có ngữ cảnh rộng hơn CNN ba lớp cũ nhưng vẫn dễ giải thích: chỉ năm `ConvBlock`, hai lần pooling và hai lần upsample. Không có phép ghép skip; việc tái tạo biên là giới hạn cần đo bằng validation/test thật. Xem [M1/README.md](M1/README.md) để hiểu từng class/hàm và lệnh chạy.
+
+### M2 — U-Net sâu tự viết, học từ đầu
+
+**Đã triển khai trong M2.ipynb và M2.py:** chỉ dùng các primitive như `nn.Conv2d`, `nn.BatchNorm2d`, `nn.ReLU`, `nn.MaxPool2d`, `F.interpolate`, `torch.cat`. Viết class `DoubleConv`, `DownBlock`, `UpBlock`, `ScratchUNet` trực tiếp trong **cả notebook và `.py`**. Không gọi `torchvision.models.resnet18`, `segmentation_models_pytorch`, model U-Net dựng sẵn, `weights=None` của built-in model, hoặc tải checkpoint encoder. Toàn bộ tham số khởi tạo mới và học trên BraTS train split.
+
+```mermaid
+flowchart TD
+    I["B×3×128×128"] --> E1["DoubleConv 3→32: 128×128"]
+    E1 --> E2["Down + DoubleConv 32→64: 64×64"]
+    E2 --> E3["Down + DoubleConv 64→128: 32×32"]
+    E3 --> E4["Down + DoubleConv 128→256: 16×16"]
+    E4 --> B["Down + DoubleConv 256→512: 8×8"]
+    B --> D4["Up + concat E4 + DoubleConv: 16×16, 256 kênh"]
+    E4 -. skip .-> D4
+    D4 --> D3["Up + concat E3 + DoubleConv: 32×32, 128 kênh"]
+    E3 -. skip .-> D3
+    D3 --> D2["Up + concat E2 + DoubleConv: 64×64, 64 kênh"]
+    E2 -. skip .-> D2
+    D2 --> D1["Up + concat E1 + DoubleConv: 128×128, 32 kênh"]
+    E1 -. skip .-> D1
+    D1 --> H["Conv 1×1 32→1: WT logits"]
+```
+
+Mỗi `UpBlock` nội suy feature map sâu tới đúng kích thước skip, ghép theo chiều kênh rồi áp dụng `DoubleConv`. Việc viết các block bằng `nn.Module` và kiểm shape tại mỗi mức làm rõ kiến trúc và giúp phát hiện sai kích thước. M2 phức tạp hơn M1 ở độ sâu và skip connection, nhưng vẫn dùng **một optimizer AdamW** đã chốt, không chạy vòng thử nhiều optimizer.
+
+### M3 — transfer learning
+
+M3 được phép dùng `torchvision` pretrained encoder. Thiết kế hiện hành dùng ResNet-18 ImageNet weights với decoder U-Net tự viết; đầu vào vẫn là FLAIR lặp ba kênh và cùng pipeline dữ liệu. Train 5 epoch đầu với encoder frozen/BatchNorm eval, sau đó mở `layer4` và tiếp tục fine-tune đến tối đa 30 epoch. M3 hiện giữ **một AdamW xuyên suốt** bằng hai param groups; không khởi tạo lại optimizer hoặc chạy các optimizer khác để chọn điểm. Nếu đổi encoder/decoder, phải ghi kiến trúc, nguồn weights, số tham số và lịch freeze trong README và artifacts trước khi test.
+
+```mermaid
+flowchart LR
+    I["FLAIR 3×128×128"] --> E["ResNet-18 pretrained: e0…e4"]
+    E --> D["Decoder upsample + skip + Conv"]
+    D --> H["WT logits 1×128×128"]
+    F["Epoch 1–5: freeze encoder"] --> U["Epoch 6–30: mở layer4"]
+```
+
+So sánh M1/M2/M3 là so sánh **ba hệ thống hoàn chỉnh** trên cùng benchmark. Muốn đo riêng lợi ích pretrained, cần thí nghiệm có cùng kiến trúc và lịch train; thí nghiệm đó nằm ngoài ba Mx hiện tại.
+
+## 3. Huấn luyện gọn và chọn mô hình
+
+Mỗi lệnh `--train --seed ...` huấn luyện **một model, một seed, một loại optimizer**. AdamW là lựa chọn cố định cho M1/M2/M3; không có vòng lặp thử SGD, Adam, RMSprop, nhiều kiến trúc hoặc nhiều learning rate rồi train lại để chọn kết quả. Có thể giảm learning rate **trong cùng run** bằng scheduler và dừng sớm khi validation patient-level Dice không cải thiện 6 epoch liên tiếp, sau tối thiểu 8 epoch; smoke vẫn chạy đúng 1 epoch. Cả ba notebook và file `.py` đã hiện thực quy tắc này; cả ba Mx đã có artifact full seed 42. Mốc 30 epoch là trần, không phải yêu cầu chạy đủ khi đã dừng sớm.
+
+Threshold/checkpoint chỉ được chọn trên validation. **M1 Run All** train rồi test ngay trong cùng notebook; M2/M3 cũng chỉ cần checkpoint của chính mình để test, không chờ mô hình khác. Ba seed cố định là báo độ biến thiên, không chọn seed tốt nhất để báo điểm duy nhất. Lưu `best.pt`, `history.csv`, `metrics_val.csv`, `preview.png`, `config.json` ở `runs/<mx>/<seed>/`; test tạo `metrics_test.csv`. Báo cáo tổng hợp sau này đọc CSV đã lưu từ từng Mx. Không tinh chỉnh lại bằng test hoặc suy diễn kiến trúc sâu hơn chắc chắn có điểm cao hơn trước phép đo.
+
+## 4. Cấu trúc repository và trạng thái thật
 
 ```text
 Project_midterm/
-├── AGENTS.md                    # quy tắc cho mọi chat session/agent
-├── README.md                    # cài đặt, download, chạy notebook/PowerShell
-├── Project_structure.md         # thiết kế này
-├── Detail_jobs.md               # 1 Mx / 1 thành viên, checklist
-├── requirements.txt             # package pip bên ngoài
-├── .venv/                       # chỉ Python Windows, không commit
+├── AGENTS.md, README.md, Project_structure.md, Detail_jobs.md, Benchmark_evaluate.md
+├── requirements.txt, .venv/                 # .venv Windows; không commit
 ├── M1/M1.ipynb, M1/M1.py, M1/README.md
 ├── M2/M2.ipynb, M2/M2.py, M2/README.md
 ├── M3/M3.ipynb, M3/M3.py, M3/README.md
-├── data/
-│   ├── source_manifest.json, splits_v1.csv, file_sha256.csv
-│   ├── raw/BRATS2015/          # 200 MRI + giấy phép, không commit
-│   └── processed/flair_wt_v1/ # cache đồng nhất, không commit
-├── runs/                       # smoke/full checkpoint, metric, preview
-├── reports/                    # bảng và báo cáo nhóm
-└── slides/                     # tài liệu do người dùng cung cấp
+├── data/source_manifest.json, splits_v1.csv, file_sha256.csv
+├── data/raw/BRATS2015/, data/processed/flair_wt_v1/
+├── runs/, reports/
+└── slides/                                  # tài liệu người dùng, giữ nguyên
 ```
 
-Mỗi `.ipynb` chứa **mã đầy đủ ngay trong các cell** và Markdown giải thích. `.py` cùng folder chứa quy trình tương ứng để chạy PowerShell. Không có `scripts/`, `src/`, `configs/`, notebook chung, package hay import mã giữa Mx. Chỉ `data/` và `.venv` là tài nguyên chung. Vì có sáu bản mã tự chứa, thay preprocessing, loss, metric hoặc kiến trúc M2/M3 phải đồng bộ cả sáu file trước benchmark cuối; `AGENTS.md` quy định việc này.
+Notebook là cách trình bày/chạy chính, chứa đủ code và Markdown; `.py` trong cùng Mx tự chứa quy trình tương ứng. Không import code từ Mx khác, không thêm `scripts/`, `src/` hay package nội bộ. Chạy trên **Windows `.venv` và CUDA**, không dùng kernel WSL.
 
-## 3. Kiến trúc từng mức
-
-### M1 — mạng nơ ron đơn giản
-
-```mermaid
-flowchart LR
-    A["FLAIR 3×128×128"] --> B["Conv 3→16, 3×3 + ReLU"]
-    B --> C["Conv 16→16, 3×3 + ReLU"]
-    C --> D["Conv 16→1, 3×3"]
-    D --> E["WT logits 1×128×128"]
-```
-
-Baseline học từ đầu, receptive field nhỏ và không downsample. Mục tiêu là mốc đơn giản, không nhận là tái hiện đầy đủ FCN của [Long và cộng sự](https://openaccess.thecvf.com/content_cvpr_2015/html/Long_Fully_Convolutional_Networks_2015_CVPR_paper.html).
-
-### M2 — mạng phức tạp huấn luyện từ đầu
-
-```mermaid
-flowchart LR
-    A["FLAIR 3×128×128"] --> B["ResNet-18 encoder random: e0…e4"]
-    B --> C["U-Net decoder: 4 up-block + skip e3…e0"]
-    C --> D["Upsample 128×128 + 1×1 head"]
-    D --> E["WT logits 1×128×128"]
-```
-
-Mã U-Net dùng `torchvision.models.resnet18(weights=None)`, decoder tự viết trong **M2.ipynb/M2.py**. Cấu trúc dựa trên [U-Net](https://arxiv.org/abs/1505.04597) và [ResNet](https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html).
-
-### M3 — transfer learning/fine-tune
-
-```mermaid
-flowchart LR
-    A["FLAIR 3×128×128"] --> B["Cùng ResNet-18 encoder, ImageNet weights"]
-    B --> C["Cùng U-Net decoder/head như M2"]
-    C --> D["WT logits 1×128×128"]
-    F["Epoch 1–5: freeze encoder, eval BN"] --> G["Epoch 6–30: mở layer4, LR nhỏ"]
-```
-
-`ResidualUNet` và decoder được viết trực tiếp, giống nhau trong **M2 và M3**. M3 dùng `ResNet18_Weights.IMAGENET1K_V1`; 5 epoch đầu chỉ học decoder/head, 25 epoch sau thêm `encoder.layer4`. So sánh M2/M3 phản ánh cả pretrained weights **và lịch train khác**, không quy toàn bộ chênh lệch cho weights. Nguồn đọc: [PyTorch transfer learning](https://docs.pytorch.org/tutorials/beginner/transfer_learning_tutorial.html) và [torchvision ResNet-18](https://docs.pytorch.org/vision/main/models/generated/torchvision.models.resnet18).
-
-## 4. Hợp đồng benchmark và đánh giá
-
-| Thành phần | Quy tắc chung |
-|---|---|
-| Khóa ca | `case_id = grade/patient_id`; 100 ca, 80 HGG/20 LGG. Không dùng `patient_id` trần vì có thể trùng giữa grade. |
-| Split | 70 train (56 HGG/14 LGG), 15 val (12/3), 15 test (12/3), khóa trong `splits_v1.csv`. Mỗi lát của một ca ở cùng split. |
-| Lát/ảnh | 32 lát/ca từ 20–80% độ sâu **ảnh** bằng chỉ số cố định; 128×128; bilinear cho FLAIR, nearest cho mask. Không dùng mask để chọn lát. |
-| Chuẩn hóa | Theo mỗi thể tích: median/IQR voxel FLAIR khác 0, clip `[-5,5]`, đưa `[0,1]`, giữ nền 0. Lặp FLAIR thành 3 kênh rồi ImageNet mean/std cho cả ba. |
-| Augmentation | Chỉ train: lật ngang đồng bộ ảnh/mask. Val/test không augmentation. |
-| Huấn luyện | Batch 16 full (8 smoke), tối đa 30 epoch; AdamW; CUDA AMP; loss `0.5 BCEWithLogits + 0.5 soft Dice`; seed 42, 123, 2026. |
-| Chọn model | Trong mỗi epoch, chọn threshold 0.30–0.70 và checkpoint theo **mean Dice theo bệnh nhân trên validation**. Không xem test khi chọn. |
-| Test | Chỉ sau khi cả ba Mx có checkpoint full cho seed; Dice/IoU/precision/recall theo ca từ TP/FP/FN của đủ 32 lát. Hai mask cùng rỗng có Dice/IoU = 1; nếu chỉ một rỗng = 0. |
-| Smoke | 2 train case, 1 val case, 1 epoch, ghi `runs/smoke/`; chỉ kiểm tính chạy được, không phải benchmark. |
-
-Mỗi file Mx tự kiểm 201 checksum, split và CUDA trước khi chạy. Cache tiền xử lý ở `data/processed/flair_wt_v1/` chỉ phụ thuộc hợp đồng dữ liệu; sửa preprocessing phải đổi cache version ở **cả sáu file**. Test theo bệnh nhân với 15 ca có bất định lớn; báo cáo cuối nên kèm điểm từng ca, trung bình/độ lệch chuẩn và bootstrap theo `case_id` sau khi chạy đủ seed.
-
-## 5. Phần cứng, trạng thái và rủi ro thực nghiệm
-
-Máy đã nhận i7-12800H, RTX A4500 Laptop **16 GiB VRAM**, khoảng 23 GiB RAM; `.venv` tại root là **Python Windows 3.12**. Ảnh 128×128 và batch 16 được thiết kế cho cấu hình này; phải đo peak VRAM/tốc độ thật khi smoke và full, không coi dự toán là kết quả. Dự toán trước khi có PyTorch Windows là M1 2–10 phút/seed, M2 15–50 phút/seed, M3 12–45 phút/seed; tổng 3 seed × 3 Mx khoảng 1,5–5,5 giờ GPU, có thể thay đổi theo nhiệt, I/O và phiên bản package.
-
-**Trạng thái:** dữ liệu đã kiểm đủ 201/201; cache đã tạo cho 100/100 ca; ba `.py` và ba notebook đã chạy smoke thành công trên Windows `.venv`/CUDA. Cặp code notebook–`.py` của từng Mx được đối chiếu khớp; M2/M3 có cùng đoạn class model và cùng số tham số. Kết quả full 3 seed, test và báo cáo benchmark chỉ được ghi khi đã chạy thật. Các notebook mặc định smoke để người đọc kiểm từng mức từ clean kernel mà không vô tình chạy nhiều giờ.
+**Trạng thái chuyển đổi:** 201/201 file raw đã được xác minh, cache có 100 ca. Seed 42 của cả ba Mx đã có artifact full train + test Windows/CUDA: M1 dừng epoch 26, best epoch 20, validation/test Dice **0.8027/0.7997**; M2 dừng epoch 24, best epoch 18, **0.8213/0.8074**; M3 dừng epoch 15, best epoch 9, **0.8259/0.8120**. Mỗi test có 15 bệnh nhân; M3 notebook chưa lưu output dù artifact đã có trong `runs/m3/42/`. Seed 123/2026 chưa có kết quả. Xem [Benchmark_evaluate.md](Benchmark_evaluate.md) để đọc so sánh và giới hạn.
