@@ -34,7 +34,7 @@ Loss là `0.5 BCEWithLogits + 0.5 soft Dice`. Mỗi lần chạy dùng một Ada
 
 Run All in loss, Dice, ngưỡng, learning rate từng epoch; bảng trung bình Dice/IoU/precision/recall/pixel accuracy của validation và test (toàn bộ, HGG, LGG); đồ thị loss/Dice và ảnh FLAIR–mask thật–mask dự đoán. Artifact ở `runs/m2/<seed>/`: `best.pt`, `history.csv`, `metrics_val.csv`, `metrics_test.csv`, `config.json`, `learning_curve.png`, `preview.png`.
 
-**Đã có kết quả thật, seed 42:** 24 epoch; checkpoint tốt nhất epoch 18, ngưỡng 0.45. Validation 15 ca có mean Dice **0.8213**; test 15 ca có mean Dice **0.8074**, IoU **0.6910**, precision **0.8157**, recall **0.8224**, pixel accuracy **0.9923**. Bản notebook cục bộ đã lưu log và hình; bản commit lên Git không lưu output theo `AGENTS.md`. Chi tiết từng ca nằm trong CSV ở `runs/m2/42/`. Seed 123/2026 chưa có kết quả; xem [báo cáo benchmark](../Benchmark_evaluate.md) để đọc so sánh seed 42.
+**Đã có kết quả thật, seed 42:** 24 epoch; checkpoint tốt nhất epoch 18, ngưỡng 0.45. Validation 15 ca có mean Dice **0.8213**; test 15 ca có mean Dice **0.8074**, IoU **0.6910**, precision **0.8157**, recall **0.8224**, pixel accuracy **0.9923**. Notebook đã lưu log và hình để trình bày; chi tiết từng ca nằm trong CSV ở `runs/m2/42/`. Seed 123/2026 chưa có kết quả; xem [báo cáo benchmark](../Benchmark_evaluate.md) để đọc so sánh seed 42.
 
 Chạy cùng quy trình bằng PowerShell từ root:
 

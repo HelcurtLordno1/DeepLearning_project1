@@ -26,7 +26,7 @@ Loss là `0.5 BCEWithLogits + 0.5 soft Dice`. Một AdamW (`lr=1e-3`, weight dec
 
 ## Cách xem output
 
-Chọn kernel Windows **BraTS 2015 (.venv)** rồi mở [M1.ipynb](M1.ipynb). Bản notebook cục bộ đã có output thực của seed 42 để trình bày; bản commit lên Git không lưu output theo `AGENTS.md`. Run All sẽ tạo lại toàn bộ log, bảng điểm và ba hình ngay trong notebook. Pixel accuracy tính cả nền, nên xem **Dice/IoU** để đánh giá chất lượng vùng u. CSV theo từng bệnh nhân nằm ở `runs/m1/<seed>/metrics_val.csv` và `metrics_test.csv`.
+Chọn kernel Windows **BraTS 2015 (.venv)** rồi mở [M1.ipynb](M1.ipynb). Notebook đã có output thực của seed 42 để trình bày, gồm log, bảng điểm và ba hình; Run All sẽ tạo lại khi cần. Pixel accuracy tính cả nền, nên xem **Dice/IoU** để đánh giá chất lượng vùng u. CSV theo từng bệnh nhân nằm ở `runs/m1/<seed>/metrics_val.csv` và `metrics_test.csv`.
 
 **Đã chạy thật, seed 42:** dừng ở epoch 26; checkpoint tốt nhất epoch 20, ngưỡng 0.30. Validation 15 ca: Dice **0.8027**, IoU **0.6808**, precision **0.8280**, recall **0.8048**, pixel accuracy **0.9924**. Test 15 ca: Dice **0.7997**, IoU **0.6797**, precision **0.8427**, recall **0.7925**, pixel accuracy **0.9919**. Đây là một seed M1; chưa phải bảng so sánh cuối của ba mô hình.
 

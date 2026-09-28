@@ -35,7 +35,7 @@ Loss là `0.5 BCEWithLogits + 0.5 soft Dice`. Epoch 1–5 đóng băng encoder v
 
 Run All sẽ in loss, Dice, ngưỡng, learning rate từng epoch; bảng trung bình Dice/IoU/precision/recall/pixel accuracy của validation và test (toàn bộ, HGG, LGG); đồ thị loss/Dice và ảnh FLAIR–mask thật–mask dự đoán. Artifact ở `runs/m3/<seed>/`: `best.pt`, `history.csv`, `metrics_val.csv`, `metrics_test.csv`, `config.json`, `learning_curve.png`, `preview.png`.
 
-**Đã có artifact full seed 42:** 15 epoch; checkpoint tốt nhất epoch 9, ngưỡng 0.70. Validation 15 ca: Dice **0.8259**, IoU **0.7095**, precision **0.8473**, recall **0.8209**. Test 15 ca: Dice **0.8120**, IoU **0.6951**, precision **0.8781**, recall **0.7726**, pixel accuracy **0.9930**. `runs/m3/42/` có checkpoint, CSV và hình thật; **M3.ipynb hiện chưa lưu output của lần chạy**, nên mở notebook ở trạng thái hiện tại sẽ chưa thấy log/hình inline. Seed 123/2026 chưa có kết quả. Xem [báo cáo benchmark](../Benchmark_evaluate.md) để so sánh với M1/M2.
+**Đã có artifact full seed 42:** 15 epoch; checkpoint tốt nhất epoch 9, ngưỡng 0.70. Validation 15 ca: Dice **0.8259**, IoU **0.7095**, precision **0.8473**, recall **0.8209**. Test 15 ca: Dice **0.8120**, IoU **0.6951**, precision **0.8781**, recall **0.7726**, pixel accuracy **0.9930**. `runs/m3/42/` có checkpoint, CSV và hình thật; **M3.ipynb cũng đã lưu output** để xem log và hình inline. Seed 123/2026 chưa có kết quả. Xem [báo cáo benchmark](../Benchmark_evaluate.md) để so sánh với M1/M2.
 
 Chạy cùng quy trình bằng PowerShell từ root:
 

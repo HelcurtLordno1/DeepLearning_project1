@@ -16,7 +16,7 @@ flowchart LR
 |---|---|
 | G0 | 201 SHA-256 đúng; kernel và PowerShell dùng `.venv\Scripts\python.exe`; CUDA sẵn sàng. |
 | G1 | Cả sáu file cùng split, 32 lát/ca, 128×128, FLAIR/WT, chuẩn hóa, augmentation, loss và patient-level metrics. M2 hoàn toàn tự viết và khởi tạo ngẫu nhiên; M3 ghi pretrained weights. |
-| G2 | M1/M2 notebook đã lưu output Run All seed 42; M3 có artifact full seed 42 nhưng notebook chưa lưu output. `Mx.py --smoke` kiểm nhanh riêng; smoke không phải điểm benchmark. |
+| G2 | Cả ba notebook đã lưu output Run All seed 42; `Mx.py --smoke` kiểm nhanh riêng và smoke không phải điểm benchmark. |
 | G3 | `--train --seed 42`, `123`, `2026` cho từng Mx. Mỗi run dùng một AdamW, checkpoint/ngưỡng chọn trên validation. Sau khi khóa, Mx đó tự đánh giá 15 ca test và lưu CSV, **không chờ Mx khác**. |
 | G4 | Tổng hợp CSV test độc lập của ba Mx theo bệnh nhân, mean/std và báo cáo. Không chọn lại model/hyperparameter theo test. |
 
@@ -58,4 +58,4 @@ Các slide CNN do người dùng cung cấp trong `slides/` có thể dùng đ�
 
 ## Trạng thái hiện tại
 
-Dữ liệu raw đã kiểm 201/201 và cache 100 ca. Seed 42 đã có artifact full cho cả ba Mx: M1 26 epoch, checkpoint epoch 20, test mean Dice **0.7997**; M2 24 epoch, checkpoint epoch 18, **0.8074**; M3 15 epoch, checkpoint epoch 9, **0.8120**. Mỗi test có 15 ca. M1/M2 notebook lưu output; M3 notebook chưa lưu output dù CSV/checkpoint/hình đã có ở `runs/m3/42/`. Seed 123/2026 chưa có kết quả. Xem [Benchmark_evaluate.md](Benchmark_evaluate.md) để đọc bảng so sánh seed 42 và giới hạn suy luận.
+Dữ liệu raw đã kiểm 201/201 và cache 100 ca. Seed 42 đã có artifact full cho cả ba Mx: M1 26 epoch, checkpoint epoch 20, test mean Dice **0.7997**; M2 24 epoch, checkpoint epoch 18, **0.8074**; M3 15 epoch, checkpoint epoch 9, **0.8120**. Mỗi test có 15 ca và cả ba notebook đã lưu output. Seed 123/2026 chưa có kết quả. Xem [Benchmark_evaluate.md](Benchmark_evaluate.md) để đọc bảng so sánh seed 42 và giới hạn suy luận.

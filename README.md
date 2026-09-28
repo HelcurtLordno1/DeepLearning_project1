@@ -2,7 +2,7 @@
 
 **Bài toán:** phân đoạn *whole tumor* (WT) nhị phân từ lát MRI FLAIR 2D. M1 là CNN encoder–decoder nhỏ tự xây; M2 được đặc tả là U-Net sâu với **toàn bộ encoder/decoder tự viết từ các lớp PyTorch cơ bản và học từ đầu**; M3 dùng encoder pretrained để transfer learning. Đây là benchmark nội bộ trên **cùng 100 ca BraTS 2015**, không phải điểm chính thức của challenge. Vì M2/M3 được phép khác kiến trúc, không quy riêng chênh lệch điểm cho pretrained weights.
 
-**Trạng thái kiểm tra:** 201/201 file raw đúng SHA-256; cache đã tạo đủ 100 ca. Cả ba Mx đã có full train/validation/test seed 42 trên Windows `.venv`/CUDA: test mean Dice theo 15 bệnh nhân lần lượt **M1 0.7997**, **M2 0.8074**, **M3 0.8120**. Artifact thật nằm ở `runs/m1/42/`, `runs/m2/42/`, `runs/m3/42/`; bản notebook cục bộ của M1/M2 có output đã lưu, M3 notebook hiện chưa lưu output. Output notebook không đưa lên Git theo `AGENTS.md`. Seed 123/2026 chưa có kết quả. Xem [báo cáo benchmark](Benchmark_evaluate.md) để đọc phân tích và giới hạn so sánh.
+**Trạng thái kiểm tra:** 201/201 file raw đúng SHA-256; cache đã tạo đủ 100 ca. Cả ba Mx đã có full train/validation/test seed 42 trên Windows `.venv`/CUDA: test mean Dice theo 15 bệnh nhân lần lượt **M1 0.7997**, **M2 0.8074**, **M3 0.8120**. Cả ba notebook đã lưu output Run All seed 42 để trình bày; artifact chi tiết nằm ở `runs/m1/42/`, `runs/m2/42/`, `runs/m3/42/`. Seed 123/2026 chưa có kết quả. Xem [báo cáo benchmark](Benchmark_evaluate.md) để đọc phân tích và giới hạn so sánh.
 
 ## Cấu trúc đã tạo
 
@@ -103,7 +103,7 @@ Lấy lệnh cài PyTorch CUDA hiện hành từ [PyTorch Start Locally](https:/
 
 ## Chạy mỗi Mx theo hai cách
 
-**Cách chính — notebook:** mở `Mx/Mx.ipynb` trên Windows, chọn kernel `.venv`, rồi **Restart Kernel + Run All**. Ô đầu chỉ chọn `SEED = 42` (sau đó 123, 2026). Notebook dùng đủ 70 ca train/15 ca validation, in log từng epoch, điểm Dice/IoU/precision/recall/pixel accuracy, biểu đồ và ảnh; sau đó **đánh giá 15 ca test của chính Mx trong cùng lượt chạy**. Checkpoint/ngưỡng luôn chọn bằng validation, không chọn lại theo test. Bản cục bộ M1/M2 đã lưu output seed 42; M3 đã có artifact full ở `runs/` nhưng notebook chưa lưu output. Notebook trên Git không chứa output; Run All sẽ tạo lại khi cần trình bày. Mỗi Mx chạy độc lập, không chờ checkpoint của Mx khác.
+**Cách chính — notebook:** mở `Mx/Mx.ipynb` trên Windows, chọn kernel `.venv`, rồi **Restart Kernel + Run All**. Ô đầu chỉ chọn `SEED = 42` (sau đó 123, 2026). Notebook dùng đủ 70 ca train/15 ca validation, in log từng epoch, điểm Dice/IoU/precision/recall/pixel accuracy, biểu đồ và ảnh; sau đó **đánh giá 15 ca test của chính Mx trong cùng lượt chạy**. Checkpoint/ngưỡng luôn chọn bằng validation, không chọn lại theo test. Cả ba notebook trên Git đã lưu output seed 42; Run All sẽ tạo lại khi đổi seed hoặc chạy trên máy khác. Mỗi Mx chạy độc lập, không chờ checkpoint của Mx khác.
 
 **Cách hai — file `.py` trong chính folder Mx:** từ PowerShell Windows ở root:
 

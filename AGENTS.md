@@ -14,7 +14,7 @@ Phạm vi: toàn bộ repository. Đọc `README.md`, `Project_structure.md`, `D
 - Dùng đúng `.venv` **Windows** ở root, tạo bằng `py -3.12 -m venv .venv` nếu thiếu. Không tạo `.venv` bằng WSL/Linux, không dùng kernel WSL hoặc đường dẫn `/mnt/...`/`/home/...` trong code, config, notebook và hướng dẫn chạy.
 - Chạy notebook trên Windows với kernel có `sys.executable` trỏ tới `Project_midterm\.venv\Scripts\python.exe`; file `.py` dùng chính interpreter đó từ PowerShell. Kiểm `torch.cuda.is_available()`; benchmark cuối dùng GPU CUDA. Nếu CUDA thiếu, ghi lỗi rõ và sửa môi trường trước khi train cuối.
 - Dùng `pathlib.Path` tìm root từ current working directory hoặc `__file__`, rồi đường dẫn tương đối tới `data/`, `runs/`, `reports/`. Không hard-code ổ đĩa/người dùng trong mã. Lệnh README có thể dùng đường dẫn D: cụ thể của máy chủ để giúp mở thư mục.
-- Không commit `.venv/`, MRI gốc, cache, checkpoint, dữ liệu bệnh nhân, log lớn hoặc output notebook. Không thêm bí mật vào notebook/`.env`.
+- Không commit `.venv/`, MRI gốc, cache, checkpoint, dữ liệu bệnh nhân hoặc log lớn. Output minh họa trong notebook chỉ commit khi người dùng yêu cầu rõ, như lần push ngày 29/09/2026; không thêm bí mật vào notebook/`.env`.
 
 ## 3. Hợp đồng benchmark không được đổi âm thầm
 
@@ -27,5 +27,5 @@ Phạm vi: toàn bộ repository. Đọc `README.md`, `Project_structure.md`, `D
 ## 4. Cách sửa và bàn giao
 
 - Mỗi thành viên sở hữu một Mx theo `Detail_jobs.md`. Không thêm API ẩn hay module dùng chung. Nếu thay quy tắc dữ liệu/metric, cập nhật cả ba notebook, ba `.py`, `README.md`, `Project_structure.md`, `Detail_jobs.md` và báo nhóm trước khi chạy lại kết quả.
-- Cả ba notebook Run All chạy full train/validation/test của một seed và hiển thị output; `Mx.py --smoke` là kiểm nhanh riêng. Hiện đã có artifact full seed 42 cho cả M1/M2/M3; M1/M2 notebook lưu output, M3 notebook chưa lưu output. Khi code từng Mx ổn định, chạy full cho 3 seed. Ghi phiên bản package, thời gian, peak VRAM, checkpoint, CSV theo ca và hình thật. Test từng Mx sau khi khóa checkpoint/ngưỡng của chính nó.
+- Cả ba notebook Run All chạy full train/validation/test của một seed và hiển thị output; `Mx.py --smoke` là kiểm nhanh riêng. Hiện đã có artifact full seed 42 và output notebook cho cả M1/M2/M3. Khi code từng Mx ổn định, chạy full cho 3 seed. Ghi phiên bản package, thời gian, peak VRAM, checkpoint, CSV theo ca và hình thật. Test từng Mx sau khi khóa checkpoint/ngưỡng của chính nó.
 - Khi kiểm tra cài đặt, dùng tài liệu [PyTorch Windows](https://docs.pytorch.org/get-started/locally/), [Python venv](https://docs.python.org/3.12/library/venv.html), [Jupyter kernel](https://ipython.readthedocs.io/en/stable/install/index.html). Chọn wheel CUDA phù hợp máy từ nguồn chính thức; không tự tạo môi trường Linux.
